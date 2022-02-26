@@ -19,6 +19,8 @@ class K {
     static let primaryColor = UIColor(named: "Primary")
     static let buttonColor = UIColor(named: "Button")
     static let textFieldColor = UIColor(named: "TextField")
+    static let progressBarProgress = UIColor(named: "ProgressBarProgress")
+    static let progressBarTrack = UIColor(named: "ProgressBarTrack")
     
     //MARK: - Images
     static let logoImage = UIImage(named: "Logo")
