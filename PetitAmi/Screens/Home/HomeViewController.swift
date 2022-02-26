@@ -8,10 +8,13 @@
 import UIKit
 
 class HomeViewController: UIViewController {
+    
+    let viewHeightProportion = UIScreen.main.bounds.height/812.0
+    let viewWidthProportion = UIScreen.main.bounds.width/375.0
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = K.primaryColor
+        view.backgroundColor = K.backgroundColor
     
         addComponents()
         addConstraints()
@@ -19,12 +22,19 @@ class HomeViewController: UIViewController {
     
     //MARK: - UI Components
     
+    let homeImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = K.homeImage
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     let titleLabel: UILabel = {
       let label = UILabel()
-        label.text = "Bonjour, mon ami! Bienvenue sur votre app française."
-        label.font = UIFont.systemFont(ofSize: 36.0)
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
+        label.text = "Bonjour, mon ami! \nBienvenue sur votre app française."
+        label.numberOfLines = 2
+        label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -52,7 +62,9 @@ class HomeViewController: UIViewController {
     //MARK: - Adding components
     
     func addComponents(){
+        view.addSubview(homeImage)
         view.addSubview(titleLabel)
+        titleLabel.font = UIFont.systemFont(ofSize: 18.0*viewHeightProportion)
         view.addSubview(loginButton)
         view.addSubview(registerButton)
     }
@@ -60,19 +72,23 @@ class HomeViewController: UIViewController {
     //MARK: - Adding constraints
 
     func addConstraints(){
-        let viewHeightProportion = view.bounds.height/812.0
-        let viewWidthProportion = view.bounds.width/375.0
+        let horizontalTitleDistance:CGFloat = 44
+        let horizontalButtonDistance:CGFloat = 74
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: viewHeightProportion*290),
-            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: viewWidthProportion * 34),
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loginButton.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: viewHeightProportion * 140),
-            loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: viewWidthProportion * 128),
-            loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: viewWidthProportion * -128),
+            homeImage.heightAnchor.constraint(equalToConstant: 300*viewHeightProportion),
+            homeImage.topAnchor.constraint(equalTo: view.topAnchor, constant: viewHeightProportion*106),
+            homeImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: viewWidthProportion * 25),
+            homeImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            titleLabel.topAnchor.constraint(equalTo: homeImage.bottomAnchor, constant: viewHeightProportion*50),
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: viewWidthProportion * horizontalTitleDistance),
+            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: viewWidthProportion * horizontalTitleDistance * (-1)),
+            loginButton.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: viewHeightProportion * 100),
+            loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: viewWidthProportion * horizontalButtonDistance),
+            loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: viewWidthProportion * horizontalButtonDistance*(-1)),
             registerButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: viewHeightProportion * 12),
-            registerButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: viewWidthProportion * 128),
-            registerButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: viewWidthProportion * -128),
+            registerButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: viewWidthProportion * horizontalButtonDistance),
+            registerButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: viewWidthProportion * horizontalButtonDistance * (-1)),
             
         ])
     }

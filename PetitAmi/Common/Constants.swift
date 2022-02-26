@@ -11,9 +11,11 @@ import UIKit
 class K {
     
     //MARK: - Colors
+    static let backgroundColor = UIColor(named: "Background")
     static let primaryColor = UIColor(named: "Primary")
     static let buttonColor = UIColor(named: "Button")
     
     //MARK: - Images
     static let logoImage = UIImage(named: "Logo")
+    static let homeImage = UIImage(named: "Reading")
 }
