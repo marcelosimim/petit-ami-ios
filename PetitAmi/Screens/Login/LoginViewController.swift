@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
     
@@ -101,6 +102,28 @@ class LoginViewController: UIViewController {
     //MARK: - Actions
     
     @objc func loginPressed(){
+        guard let email = emailTextField.text, let password = passwordTextField.text else {
+            return
+        }
         
+        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+            guard let result = result else {
+                print(error)
+                self.showAlert(with: error?.localizedDescription ?? "Erro não identificado.")
+                return
+            }
+            
+            let newController = MainViewController()
+            self.navigationController?.pushViewController(newController, animated: true)
+        }
     }
+    
+    //MARK: - Alert
+    
+    func showAlert(with message:String){
+        let alert = UIAlertController(title: "Erro ao logar", message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
 }
