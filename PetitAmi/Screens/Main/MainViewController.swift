@@ -15,7 +15,19 @@ class MainViewController: UIViewController {
         view.backgroundColor = K.backgroundColor
         
         customizeNavigationBar()
+        addComponents()
+        addConstraints()
     }
+    
+    //MARK: - Components
+    
+    let progressTitle: UILabel = {
+       let label = UILabel()
+        label.text = "Seu progresso:"
+        //label.font = UIFont.systemFont(ofSize: <#T##CGFloat#>, weight: <#T##UIFont.Weight#>)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     //MARK: - Navigation Bar
     
@@ -35,5 +47,15 @@ class MainViewController: UIViewController {
         }catch let error {
             print(error)
         }
+    }
+}
+
+extension MainViewController: ViewConfiguration {
+    func addComponents() {
+        
+    }
+    
+    func addConstraints() {
+        
     }
 }

@@ -10,6 +10,10 @@ import UIKit
 
 class K {
     
+    //MARK: - Device
+    static let viewHeightProportion = UIScreen.main.bounds.height/812.0
+    static let viewWidthProportion = UIScreen.main.bounds.width/375.0
+    
     //MARK: - Colors
     static let backgroundColor = UIColor(named: "Background")
     static let primaryColor = UIColor(named: "Primary")
