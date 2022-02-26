@@ -20,6 +20,9 @@
 		A39C179A27C9C3BD00CB64AD /* PetitAmiUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C179927C9C3BD00CB64AD /* PetitAmiUITestsLaunchTests.swift */; };
 		A39C17AC27C9C5A300CB64AD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C17AB27C9C5A300CB64AD /* Constants.swift */; };
 		A3D495AC27CAC95500DFF5A8 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D495AB27CAC95500DFF5A8 /* Protocols.swift */; };
+		A3D495AF27CAD74100DFF5A8 /* Firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D495AE27CAD74100DFF5A8 /* Firebase.swift */; };
+		A3D495B327CAD82800DFF5A8 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D495B227CAD82800DFF5A8 /* Repository.swift */; };
+		A3D495B627CADFF300DFF5A8 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D495B527CADFF300DFF5A8 /* AppContainer.swift */; };
 		A3E3FF2627CA77AD0049883D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E3FF2527CA77AD0049883D /* LoginViewController.swift */; };
 		A3E3FF2927CA78730049883D /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E3FF2827CA78730049883D /* RegisterViewController.swift */; };
 		A3E3FF2B27CAB0690049883D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3E3FF2A27CAB0690049883D /* GoogleService-Info.plist */; };
@@ -66,6 +69,9 @@
 		A39C179927C9C3BD00CB64AD /* PetitAmiUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetitAmiUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A39C17AB27C9C5A300CB64AD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		A3D495AB27CAC95500DFF5A8 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		A3D495AE27CAD74100DFF5A8 /* Firebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firebase.swift; sourceTree = "<group>"; };
+		A3D495B227CAD82800DFF5A8 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		A3D495B527CADFF300DFF5A8 /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
 		A3E3FF2527CA77AD0049883D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A3E3FF2827CA78730049883D /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		A3E3FF2A27CAB0690049883D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -141,6 +147,8 @@
 		A39C177527C9C3B800CB64AD /* PetitAmi */ = {
 			isa = PBXGroup;
 			children = (
+				A3D495B027CAD80C00DFF5A8 /* Data */,
+				A3D495B427CADFD600DFF5A8 /* Dependency Injection */,
 				A39C17AA27C9C58D00CB64AD /* Common */,
 				A39C17A727C9C40D00CB64AD /* Screens */,
 				A39C17A827C9C42500CB64AD /* View */,
@@ -213,6 +221,39 @@
 				A3D495AB27CAC95500DFF5A8 /* Protocols.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		A3D495AD27CAD73000DFF5A8 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				A3D495AE27CAD74100DFF5A8 /* Firebase.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		A3D495B027CAD80C00DFF5A8 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				A3D495AD27CAD73000DFF5A8 /* Firebase */,
+				A3D495B127CAD81400DFF5A8 /* Repository */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		A3D495B127CAD81400DFF5A8 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				A3D495B227CAD82800DFF5A8 /* Repository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		A3D495B427CADFD600DFF5A8 /* Dependency Injection */ = {
+			isa = PBXGroup;
+			children = (
+				A3D495B527CADFF300DFF5A8 /* AppContainer.swift */,
+			);
+			path = "Dependency Injection";
 			sourceTree = "<group>";
 		};
 		A3E3FF2427CA77960049883D /* Login */ = {
@@ -495,6 +536,9 @@
 				A39C177927C9C3B800CB64AD /* SceneDelegate.swift in Sources */,
 				A3E3FF2927CA78730049883D /* RegisterViewController.swift in Sources */,
 				A3E3FF2627CA77AD0049883D /* LoginViewController.swift in Sources */,
+				A3D495B627CADFF300DFF5A8 /* AppContainer.swift in Sources */,
+				A3D495AF27CAD74100DFF5A8 /* Firebase.swift in Sources */,
+				A3D495B327CAD82800DFF5A8 /* Repository.swift in Sources */,
 				A39C17AC27C9C5A300CB64AD /* Constants.swift in Sources */,
 				A3D495AC27CAC95500DFF5A8 /* Protocols.swift in Sources */,
 			);

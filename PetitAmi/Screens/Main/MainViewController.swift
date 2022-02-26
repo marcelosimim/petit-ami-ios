@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Swinject
+import Firebase
 import FirebaseAuth
 
 class MainViewController: UIViewController {
@@ -17,6 +19,7 @@ class MainViewController: UIViewController {
         customizeNavigationBar()
         addComponents()
         addConstraints()
+        loadCover()
     }
     
     //MARK: - Components
@@ -78,11 +81,23 @@ class MainViewController: UIViewController {
     }
     
     @objc func coverClicked(){
-        print("cover")
+        
     }
 }
 
 extension MainViewController: ViewConfiguration {
+    func loadCover() {
+        let repository: RepositoryProtocol = AppContainer.shared.resolve(RepositoryProtocol.self)!
+        repository.getCoverImage(for: 1) { data, error in
+            guard let data = data else {
+                print(error?.localizedDescription)
+                return
+            }
+            
+            self.coverImage.image = data
+        }
+    }
+    
     func addComponents() {
         view.addSubview(progressTitle)
         view.addSubview(progressBar)

@@ -4,7 +4,9 @@
 target 'PetitAmi' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
+  pod 'Swinject'
 	pod 'Firebase/Auth'
+  pod 'Firebase/Storage'
 	pod 'Firebase/Firestore'
   # Pods for PetitAmi
 
