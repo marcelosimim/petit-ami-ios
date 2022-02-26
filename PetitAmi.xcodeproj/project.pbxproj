@@ -9,13 +9,14 @@
 /* Begin PBXBuildFile section */
 		A39C177727C9C3B800CB64AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C177627C9C3B800CB64AD /* AppDelegate.swift */; };
 		A39C177927C9C3B800CB64AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C177827C9C3B800CB64AD /* SceneDelegate.swift */; };
-		A39C177B27C9C3B800CB64AD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C177A27C9C3B800CB64AD /* ViewController.swift */; };
+		A39C177B27C9C3B800CB64AD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C177A27C9C3B800CB64AD /* HomeViewController.swift */; };
 		A39C177E27C9C3B800CB64AD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A39C177C27C9C3B800CB64AD /* Main.storyboard */; };
 		A39C178027C9C3BC00CB64AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A39C177F27C9C3BC00CB64AD /* Assets.xcassets */; };
 		A39C178327C9C3BC00CB64AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A39C178127C9C3BC00CB64AD /* LaunchScreen.storyboard */; };
 		A39C178E27C9C3BD00CB64AD /* PetitAmiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C178D27C9C3BD00CB64AD /* PetitAmiTests.swift */; };
 		A39C179827C9C3BD00CB64AD /* PetitAmiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C179727C9C3BD00CB64AD /* PetitAmiUITests.swift */; };
 		A39C179A27C9C3BD00CB64AD /* PetitAmiUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C179927C9C3BD00CB64AD /* PetitAmiUITestsLaunchTests.swift */; };
+		A39C17AC27C9C5A300CB64AD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C17AB27C9C5A300CB64AD /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +40,7 @@
 		A39C177327C9C3B800CB64AD /* PetitAmi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetitAmi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A39C177627C9C3B800CB64AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A39C177827C9C3B800CB64AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		A39C177A27C9C3B800CB64AD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A39C177A27C9C3B800CB64AD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		A39C177D27C9C3B800CB64AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A39C177F27C9C3BC00CB64AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A39C178227C9C3BC00CB64AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +50,7 @@
 		A39C179327C9C3BD00CB64AD /* PetitAmiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PetitAmiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A39C179727C9C3BD00CB64AD /* PetitAmiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetitAmiUITests.swift; sourceTree = "<group>"; };
 		A39C179927C9C3BD00CB64AD /* PetitAmiUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetitAmiUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		A39C17AB27C9C5A300CB64AD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,12 +101,10 @@
 		A39C177527C9C3B800CB64AD /* PetitAmi */ = {
 			isa = PBXGroup;
 			children = (
-				A39C177627C9C3B800CB64AD /* AppDelegate.swift */,
-				A39C177827C9C3B800CB64AD /* SceneDelegate.swift */,
-				A39C177A27C9C3B800CB64AD /* ViewController.swift */,
-				A39C177C27C9C3B800CB64AD /* Main.storyboard */,
-				A39C177F27C9C3BC00CB64AD /* Assets.xcassets */,
-				A39C178127C9C3BC00CB64AD /* LaunchScreen.storyboard */,
+				A39C17AA27C9C58D00CB64AD /* Common */,
+				A39C17A727C9C40D00CB64AD /* Screens */,
+				A39C17A827C9C42500CB64AD /* View */,
+				A39C17A627C9C3FB00CB64AD /* Resources */,
 				A39C178427C9C3BC00CB64AD /* Info.plist */,
 			);
 			path = PetitAmi;
@@ -125,6 +125,49 @@
 				A39C179927C9C3BD00CB64AD /* PetitAmiUITestsLaunchTests.swift */,
 			);
 			path = PetitAmiUITests;
+			sourceTree = "<group>";
+		};
+		A39C17A627C9C3FB00CB64AD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A39C177627C9C3B800CB64AD /* AppDelegate.swift */,
+				A39C177827C9C3B800CB64AD /* SceneDelegate.swift */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A39C17A727C9C40D00CB64AD /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				A39C17A927C9C45000CB64AD /* Home */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		A39C17A827C9C42500CB64AD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A39C177F27C9C3BC00CB64AD /* Assets.xcassets */,
+				A39C178127C9C3BC00CB64AD /* LaunchScreen.storyboard */,
+				A39C177C27C9C3B800CB64AD /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A39C17A927C9C45000CB64AD /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				A39C177A27C9C3B800CB64AD /* HomeViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		A39C17AA27C9C58D00CB64AD /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				A39C17AB27C9C5A300CB64AD /* Constants.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,9 +301,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A39C177B27C9C3B800CB64AD /* ViewController.swift in Sources */,
+				A39C177B27C9C3B800CB64AD /* HomeViewController.swift in Sources */,
 				A39C177727C9C3B800CB64AD /* AppDelegate.swift in Sources */,
 				A39C177927C9C3B800CB64AD /* SceneDelegate.swift in Sources */,
+				A39C17AC27C9C5A300CB64AD /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
