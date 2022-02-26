@@ -17,6 +17,8 @@
 		A39C179827C9C3BD00CB64AD /* PetitAmiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C179727C9C3BD00CB64AD /* PetitAmiUITests.swift */; };
 		A39C179A27C9C3BD00CB64AD /* PetitAmiUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C179927C9C3BD00CB64AD /* PetitAmiUITestsLaunchTests.swift */; };
 		A39C17AC27C9C5A300CB64AD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C17AB27C9C5A300CB64AD /* Constants.swift */; };
+		A3E3FF2627CA77AD0049883D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E3FF2527CA77AD0049883D /* LoginViewController.swift */; };
+		A3E3FF2927CA78730049883D /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E3FF2827CA78730049883D /* RegisterViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		A39C179727C9C3BD00CB64AD /* PetitAmiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetitAmiUITests.swift; sourceTree = "<group>"; };
 		A39C179927C9C3BD00CB64AD /* PetitAmiUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetitAmiUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A39C17AB27C9C5A300CB64AD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		A3E3FF2527CA77AD0049883D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A3E3FF2827CA78730049883D /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +107,7 @@
 			children = (
 				A39C17AA27C9C58D00CB64AD /* Common */,
 				A39C17A727C9C40D00CB64AD /* Screens */,
+				A3E3FF2727CA785F0049883D /* Register */,
 				A39C17A827C9C42500CB64AD /* View */,
 				A39C17A627C9C3FB00CB64AD /* Resources */,
 				A39C178427C9C3BC00CB64AD /* Info.plist */,
@@ -140,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				A39C17A927C9C45000CB64AD /* Home */,
+				A3E3FF2427CA77960049883D /* Login */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -168,6 +174,22 @@
 				A39C17AB27C9C5A300CB64AD /* Constants.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		A3E3FF2427CA77960049883D /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				A3E3FF2527CA77AD0049883D /* LoginViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		A3E3FF2727CA785F0049883D /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				A3E3FF2827CA78730049883D /* RegisterViewController.swift */,
+			);
+			path = Register;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -304,6 +326,8 @@
 				A39C177B27C9C3B800CB64AD /* HomeViewController.swift in Sources */,
 				A39C177727C9C3B800CB64AD /* AppDelegate.swift in Sources */,
 				A39C177927C9C3B800CB64AD /* SceneDelegate.swift in Sources */,
+				A3E3FF2927CA78730049883D /* RegisterViewController.swift in Sources */,
+				A3E3FF2627CA77AD0049883D /* LoginViewController.swift in Sources */,
 				A39C17AC27C9C5A300CB64AD /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
