@@ -139,7 +139,6 @@
 			children = (
 				A39C17AA27C9C58D00CB64AD /* Common */,
 				A39C17A727C9C40D00CB64AD /* Screens */,
-				A3E3FF2727CA785F0049883D /* Register */,
 				A39C17A827C9C42500CB64AD /* View */,
 				A39C17A627C9C3FB00CB64AD /* Resources */,
 				A39C178427C9C3BC00CB64AD /* Info.plist */,
@@ -179,6 +178,7 @@
 			children = (
 				A39C17A927C9C45000CB64AD /* Home */,
 				A3E3FF2427CA77960049883D /* Login */,
+				A3E3FF2727CA785F0049883D /* Register */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
