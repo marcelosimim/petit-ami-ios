@@ -55,9 +55,16 @@ class MainViewController: UIViewController {
        let imageView = UIImageView()
         imageView.image = UIImage(systemName: "xmark.octagon")
         imageView.contentMode = .scaleAspectFit
-        
+        imageView.isHidden = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
+    }()
+    
+    let activityIndicator: UIActivityIndicatorView  = {
+       let activityIndicatorView = UIActivityIndicatorView()
+        activityIndicatorView.hidesWhenStopped = true
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        return activityIndicatorView
     }()
     
     //MARK: - Navigation Bar
@@ -86,8 +93,11 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController: ViewConfiguration {
+    
     func loadCover() {
+        activityIndicator.startAnimating()
         let repository: RepositoryProtocol = AppContainer.shared.resolve(RepositoryProtocol.self)!
+        
         repository.getCoverImage(for: 1) { data, error in
             guard let data = data else {
                 print(error?.localizedDescription)
@@ -95,6 +105,8 @@ extension MainViewController: ViewConfiguration {
             }
             
             self.coverImage.image = data
+            self.coverImage.isHidden = false
+            self.activityIndicator.stopAnimating()
         }
     }
     
@@ -103,6 +115,7 @@ extension MainViewController: ViewConfiguration {
         view.addSubview(progressBar)
         view.addSubview(keepStudyingLabel)
         view.addSubview(coverImage)
+        view.addSubview(activityIndicator)
         coverImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(coverClicked)))
         coverImage.isUserInteractionEnabled = true
     }
@@ -123,7 +136,11 @@ extension MainViewController: ViewConfiguration {
             coverImage.topAnchor.constraint(equalTo: keepStudyingLabel.bottomAnchor, constant: 24*K.viewHeightProportion),
             coverImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 126*K.viewWidthProportion),
             coverImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            coverImage.heightAnchor.constraint(equalToConstant: 160*K.viewHeightProportion)
+            coverImage.heightAnchor.constraint(equalToConstant: 200*K.viewHeightProportion),
+            activityIndicator.topAnchor.constraint(equalTo: keepStudyingLabel.bottomAnchor, constant: 100*K.viewHeightProportion),
+            activityIndicator.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 126*K.viewWidthProportion),
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            //activityIndicator.heightAnchor.constraint(equalToConstant: 200*K.viewHeightProportion)
         ])
     }
 }
