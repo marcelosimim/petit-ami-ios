@@ -15,7 +15,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = K.backgroundColor
-    
+        self.navigationItem.setHidesBackButton(true, animated: false)
         addComponents()
         addConstraints()
     }

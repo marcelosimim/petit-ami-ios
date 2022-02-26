@@ -33,6 +33,7 @@ class LoginViewController: UIViewController {
     
     let emailTextField: UITextField = {
        let textField = UITextField()
+        textField.text = "marcelo@adm.com"
         textField.placeholder = "Email"
         textField.layer.cornerRadius = 8
         textField.layer.backgroundColor = K.textFieldColor?.cgColor
@@ -44,6 +45,7 @@ class LoginViewController: UIViewController {
     
     let passwordTextField: UITextField = {
        let textField = UITextField()
+        textField.text = "123456"
         textField.placeholder = "Senha"
         textField.layer.cornerRadius = 8
         textField.layer.backgroundColor = K.textFieldColor?.cgColor
