@@ -45,6 +45,7 @@ class HomeViewController: UIViewController {
         button.setTitleColor(UIColor.white, for: .normal)
         button.setTitle("ENTRAR", for: .normal)
         button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(loginClicked), for: .touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -55,6 +56,7 @@ class HomeViewController: UIViewController {
         button.setTitleColor(UIColor.white, for: .normal)
         button.setTitle("CADASTRAR", for: .normal)
         button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(registerClicked), for: .touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -91,6 +93,16 @@ class HomeViewController: UIViewController {
             registerButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: viewWidthProportion * horizontalButtonDistance * (-1)),
             
         ])
+    }
+    
+    //MARK: - Actions
+    
+    @objc func loginClicked(){
+    
+    }
+    
+    @objc func registerClicked(){
+        
     }
 }
 
