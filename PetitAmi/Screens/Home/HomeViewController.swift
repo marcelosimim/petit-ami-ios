@@ -98,11 +98,13 @@ class HomeViewController: UIViewController {
     //MARK: - Actions
     
     @objc func loginClicked(){
-    
+        let newController = LoginViewController()
+        navigationController?.pushViewController(newController, animated: true)
     }
     
     @objc func registerClicked(){
-        
+        let newController = RegisterViewController()
+        navigationController?.pushViewController(newController, animated: true)
     }
 }
 
