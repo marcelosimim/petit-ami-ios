@@ -26,4 +26,5 @@ class K {
     static let logoImage = UIImage(named: "Logo")
     static let homeImage = UIImage(named: "Reading")
     static let loginImage = UIImage(named: "Login")
+    static let notFoundedImage = UIImage(systemName: "xmark.octagon")
 }
