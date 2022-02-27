@@ -1,0 +1,6 @@
+framework module Pods_PetitAmiTests {
+  umbrella header "Pods-PetitAmiTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
