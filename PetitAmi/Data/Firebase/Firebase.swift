@@ -15,6 +15,7 @@ protocol FirebaseProtocol {
     func getUserProgress(completion: @escaping (Float?, Error?) -> Void)
     func getUnitAndExercise(completion: @escaping ([Int]?, Error?) -> Void)
     func getExerciseImage(unit u:Int, exercise e:Int, completion: @escaping (UIImage?, Error?) -> Void)
+    func getExerciseSound(unit u:Int, exercise e:Int, completion: @escaping (String?, Error?) -> Void)
 }
 
 class Firebase: FirebaseProtocol{
@@ -68,6 +69,19 @@ class Firebase: FirebaseProtocol{
                 return
             }
             completion(UIImage(data: data), nil)
+        }
+    }
+    
+    func getExerciseSound(unit u: Int, exercise e: Int, completion: @escaping (String?, Error?) -> Void) {
+        let reference = Storage.storage().reference(withPath: "exercises/unit\(u)/audios/\(e).mp3")
+        
+        reference.downloadURL { url, error in
+            guard let url = url else {
+                completion(nil, error)
+                return
+            }
+            
+            completion(url.absoluteString,nil)
         }
     }
 }
