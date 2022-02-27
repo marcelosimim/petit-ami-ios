@@ -15,6 +15,7 @@ protocol RepositoryProtocol {
     func getExerciseImage(unit u:Int, exercise e:Int, completion: @escaping (UIImage?, Error?) -> Void)
     func getExerciseSound(unit u:Int, exercise e:Int, completion: @escaping (String?, Error?) -> Void)
     func getExerciseAnswer(unit u:Int, exercise e:Int, completion: @escaping (String?, Bool?, Error?) -> Void)
+    func getUnitInfo(unit u:Int, completion: @escaping (Int?, Error?) -> Void)
 }
 
 class Repository: RepositoryProtocol {
@@ -47,5 +48,9 @@ class Repository: RepositoryProtocol {
     
     func getExerciseAnswer(unit u:Int, exercise e:Int, completion: @escaping (String?, Bool?, Error?) -> Void){
         firebase.getExerciseAnswer(unit: u, exercise: e, completion: completion)
+    }
+    
+    func getUnitInfo(unit u:Int, completion: @escaping (Int?, Error?) -> Void){
+        firebase.getUnitInfo(unit: u, completion: completion)
     }
 }

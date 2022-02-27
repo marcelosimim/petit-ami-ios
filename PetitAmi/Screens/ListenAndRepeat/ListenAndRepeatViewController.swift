@@ -16,6 +16,8 @@ class ListenAndRepeatViewController: UIViewController {
     var player: AVPlayer?
     var correctAnswer = ""
     var exerciseType = false
+    var unitSize: Int?
+    var currentExercise: Int?
     
     let voiceOverlayController: VoiceOverlayController = {
           let recordableHandler = {
@@ -81,9 +83,21 @@ class ListenAndRepeatViewController: UIViewController {
         self.player!.play()
     }
     
-    func alert(title:String, message:String){
+    func alert(title:String, message:String, next:Bool){
             let alertController:UIAlertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            let ok:UIAlertAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+        let ok:UIAlertAction = UIAlertAction(title: "Ok", style: .cancel) { alert in
+            if next {
+                guard let currentExercise = self.currentExercise, let unitSize = self.unitSize else {
+                    return
+                }
+
+                if currentExercise+1 <= unitSize {
+                    //next exercise + update ui or navigate
+                }else{
+                    //next unit + update ui or navigate
+                }
+            }
+        }
             alertController.addAction(ok)
             self.present(alertController, animated: true, completion: nil)
         }
@@ -95,12 +109,12 @@ class ListenAndRepeatViewController: UIViewController {
             if finished {
                 if text.lowercased() == self.correctAnswer.lowercased() {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        self.alert(title: "Resposta correta!", message: "Parabéns! Voce acertou!")
+                        self.alert(title: "Resposta correta!", message: "Parabéns! Voce acertou!", next: true)
                      }
                     
                 }else{
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        self.alert(title: "Resposta incorreta...", message: "Ops... Tente novamente!")
+                        self.alert(title: "Resposta incorreta...", message: "Ops... Tente novamente!", next: false)
                     }
                     print(self.correctAnswer, " vs ", text)
                 }
@@ -121,11 +135,23 @@ extension ListenAndRepeatViewController: ViewConfiguration {
                 print(error)
                 return
             }
-            
+            self.currentExercise = data[1]
             self.title = "Unité \(data[0]) - \(data[1])"
+            self.getUnitSize(unit: data[0])
             self.loadExerciseImage(unit: data[0], exercise: data[1])
             self.getExerciseSound(unit: data[0], exercise: data[1])
             self.getExerciseAnswer(unit: data[0], exercise: data[1])
+        }
+    }
+    
+    func getUnitSize(unit: Int){
+        repository.getUnitInfo(unit: unit) { data, error in
+            guard let data = data else {
+                print(error)
+                return
+            }
+            
+            self.unitSize = data
         }
     }
     

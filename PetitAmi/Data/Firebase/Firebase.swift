@@ -17,6 +17,7 @@ protocol FirebaseProtocol {
     func getExerciseImage(unit u:Int, exercise e:Int, completion: @escaping (UIImage?, Error?) -> Void)
     func getExerciseSound(unit u:Int, exercise e:Int, completion: @escaping (String?, Error?) -> Void)
     func getExerciseAnswer(unit u:Int, exercise e:Int, completion: @escaping (String?, Bool?, Error?) -> Void)
+    func getUnitInfo(unit u:Int, completion: @escaping (Int?, Error?) -> Void)
 }
 
 class Firebase: FirebaseProtocol{
@@ -97,6 +98,20 @@ class Firebase: FirebaseProtocol{
             let type = document.data()!["answer"] as! Bool
             let check = document.data()!["check"] as! String
             completion(check, type, error)
+        }
+    }
+    
+    func getUnitInfo(unit u: Int, completion: @escaping (Int?, Error?) -> Void) {
+        let unitRef = Firestore.firestore().collection("unit\(u)").document("info")
+        
+        unitRef.getDocument { document, error in
+            guard let document = document else {
+                completion(nil, error)
+                return
+            }
+            
+            let size = document.data()!["size"] as! Int
+            completion(size, error)
         }
     }
 }
