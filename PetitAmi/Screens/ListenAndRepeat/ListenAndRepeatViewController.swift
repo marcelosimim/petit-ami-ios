@@ -7,12 +7,22 @@
 
 import UIKit
 import AVFoundation
+import InstantSearchVoiceOverlay
 
 class ListenAndRepeatViewController: UIViewController {
     
     let repository: RepositoryProtocol = AppContainer.shared.resolve(RepositoryProtocol.self)!
     var soundURL: String = ""
     var player: AVPlayer?
+    var correctAnswer = ""
+    var exerciseType = false
+    
+    let voiceOverlayController: VoiceOverlayController = {
+          let recordableHandler = {
+            return SpeechController(locale: Locale(identifier: "fr_FR"))
+          }
+          return VoiceOverlayController(speechControllerHandler: recordableHandler)
+        }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +30,7 @@ class ListenAndRepeatViewController: UIViewController {
         getDatas()
         addComponents()
         addConstraints()
+        voiceOverlaySettings()
     }
     
     //MARK: - UI Components
@@ -49,15 +60,6 @@ class ListenAndRepeatViewController: UIViewController {
          return imageView
     }()
     
-    let answerLabel: UILabel = {
-       let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.text = "Sua resposta aparecerá aqui."
-        label.numberOfLines = 5
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
     let micButton: UIImageView = {
         let imageView = UIImageView()
          imageView.image = K.defaultMicIcon
@@ -79,8 +81,33 @@ class ListenAndRepeatViewController: UIViewController {
         self.player!.play()
     }
     
+    func alert(title:String, message:String){
+            let alertController:UIAlertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let ok:UIAlertAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+            alertController.addAction(ok)
+            self.present(alertController, animated: true, completion: nil)
+        }
+    
     @objc func micClicked(){
-        print("mic")
+        voiceOverlayController.start(on: self, textHandler: { (text, finished ,any) in
+            print("voice output: \(String(describing: text))")
+            print("voice output: is it final? \(String(describing: finished))")
+            if finished {
+                if text.lowercased() == self.correctAnswer.lowercased() {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        self.alert(title: "Resposta correta!", message: "Parabéns! Voce acertou!")
+                     }
+                    
+                }else{
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        self.alert(title: "Resposta incorreta...", message: "Ops... Tente novamente!")
+                    }
+                    print(self.correctAnswer, " vs ", text)
+                }
+            }
+                }, errorHandler: { (error) in
+                    print("voice output: error \(String(describing: error))")
+                })
     }
 }
 
@@ -98,6 +125,7 @@ extension ListenAndRepeatViewController: ViewConfiguration {
             self.title = "Unité \(data[0]) - \(data[1])"
             self.loadExerciseImage(unit: data[0], exercise: data[1])
             self.getExerciseSound(unit: data[0], exercise: data[1])
+            self.getExerciseAnswer(unit: data[0], exercise: data[1])
         }
     }
     
@@ -126,13 +154,23 @@ extension ListenAndRepeatViewController: ViewConfiguration {
         }
     }
     
+    func getExerciseAnswer(unit:Int, exercise: Int){
+        repository.getExerciseAnswer(unit: unit, exercise: exercise) { answer, type, error in
+            guard let answer = answer, let type = type else {
+                return
+            }
+            
+            self.correctAnswer = answer
+            self.exerciseType = type
+        }
+    }
+    
     func addComponents() {
         view.addSubview(exerciseImage)
         view.addSubview(activityIndicator)
         view.addSubview(speakerButton)
         speakerButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(speakerClicked)))
         speakerButton.isUserInteractionEnabled = true
-        view.addSubview(answerLabel)
         view.addSubview(micButton)
         micButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(micClicked)))
         micButton.isUserInteractionEnabled = true
@@ -151,10 +189,7 @@ extension ListenAndRepeatViewController: ViewConfiguration {
             speakerButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: K.viewWidthProportion*150),
             speakerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             speakerButton.heightAnchor.constraint(equalToConstant: K.viewHeightProportion*65),
-            answerLabel.topAnchor.constraint(equalTo: speakerButton.bottomAnchor, constant: K.viewHeightProportion*40),
-            answerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: K.viewWidthProportion*38),
-            answerLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            micButton.topAnchor.constraint(equalTo: answerLabel.bottomAnchor, constant: K.viewHeightProportion*70),
+            micButton.topAnchor.constraint(equalTo: view.bottomAnchor, constant: K.viewHeightProportion*70*(-1)),
             micButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: K.viewWidthProportion*170),
             micButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             micButton.heightAnchor.constraint(equalToConstant: K.viewHeightProportion*40),
@@ -183,4 +218,18 @@ extension ListenAndRepeatViewController {
                 }
         }
     }
+}
+
+//MARK: - Instant Search VoiceOverlay
+
+extension ListenAndRepeatViewController {
+    func voiceOverlaySettings(){
+            voiceOverlayController.settings.layout.inputScreen.subtitleInitial = ""
+            voiceOverlayController.settings.layout.inputScreen.subtitleBullet = ""
+            voiceOverlayController.settings.layout.inputScreen.subtitleBulletList = []
+            voiceOverlayController.settings.layout.inputScreen.titleInProgress = correctAnswer
+            voiceOverlayController.settings.layout.inputScreen.titleListening = correctAnswer
+    }
+    
+    
 }

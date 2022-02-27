@@ -8,6 +8,7 @@ target 'PetitAmi' do
 	pod 'Firebase/Auth'
   pod 'Firebase/Storage'
 	pod 'Firebase/Firestore'
+  pod 'InstantSearchVoiceOverlay'
   # Pods for PetitAmi
 
   target 'PetitAmiTests' do

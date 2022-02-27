@@ -16,10 +16,10 @@ protocol FirebaseProtocol {
     func getUnitAndExercise(completion: @escaping ([Int]?, Error?) -> Void)
     func getExerciseImage(unit u:Int, exercise e:Int, completion: @escaping (UIImage?, Error?) -> Void)
     func getExerciseSound(unit u:Int, exercise e:Int, completion: @escaping (String?, Error?) -> Void)
+    func getExerciseAnswer(unit u:Int, exercise e:Int, completion: @escaping (String?, Bool?, Error?) -> Void)
 }
 
 class Firebase: FirebaseProtocol{
-    
     let userRef = Firestore.firestore().collection("users").document(Auth.auth().currentUser?.uid ?? "")
     
     func getCoverImage(for unit:Int, completion: @escaping (UIImage?, Error?) -> Void) {
@@ -82,6 +82,21 @@ class Firebase: FirebaseProtocol{
             }
             
             completion(url.absoluteString,nil)
+        }
+    }
+    
+    func getExerciseAnswer(unit u: Int, exercise e: Int, completion: @escaping (String?, Bool?, Error?) -> Void) {
+        let exerciseRef = Firestore.firestore().collection("unit\(u)").document("e\(e)")
+        
+        exerciseRef.getDocument { document, error in
+            guard let document = document else {
+                completion(nil, nil, error)
+                return
+            }
+            
+            let type = document.data()!["answer"] as! Bool
+            let check = document.data()!["check"] as! String
+            completion(check, type, error)
         }
     }
 }
