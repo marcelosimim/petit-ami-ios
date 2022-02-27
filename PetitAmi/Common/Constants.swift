@@ -26,4 +26,11 @@ class K {
     static let logoImage = UIImage(named: "Logo")
     static let homeImage = UIImage(named: "Reading")
     static let loginImage = UIImage(named: "Login")
+    static let notFoundedImage = UIImage(systemName: "xmark.octagon")
+    
+    //MARK: - Icons
+    static let defaultSoundIcon = UIImage(systemName: "speaker.fill")
+    static let waitingSoundIcon = UIImage(systemName: "speaker.zzz.fill")
+    static let playingSoundIcon = UIImage(systemName: "speaker.wave.3.fill")
+    static let defaultMicIcon = UIImage(systemName: "mic.fill")
 }

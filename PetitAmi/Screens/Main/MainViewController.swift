@@ -56,7 +56,7 @@ class MainViewController: UIViewController {
     
     let coverImage: UIImageView = {
        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "xmark.octagon")
+        imageView.image = K.notFoundedImage
         imageView.contentMode = .scaleAspectFit
         imageView.isHidden = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -91,7 +91,8 @@ class MainViewController: UIViewController {
     }
     
     @objc func coverClicked(){
-        
+        let newController = ListenAndRepeatViewController()
+        navigationController?.pushViewController(newController, animated: true)
     }
 }
 
