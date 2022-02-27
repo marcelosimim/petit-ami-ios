@@ -10,6 +10,7 @@ import Foundation
 
 protocol RepositoryProtocol {
     func getCoverImage(for unit:Int, completion: @escaping (UIImage?, Error?) -> Void)
+    func getUserProgress(completion: @escaping (Float?, Error?) -> Void)
 }
 
 class Repository: RepositoryProtocol {
@@ -22,5 +23,9 @@ class Repository: RepositoryProtocol {
     
     func getCoverImage(for unit: Int, completion: @escaping (UIImage?, Error?) -> Void) {
         firebase.getCoverImage(for: unit, completion: completion)
+    }
+    
+    func getUserProgress(completion: @escaping (Float?, Error?) -> Void){
+        firebase.getUserProgress(completion: completion)
     }
 }

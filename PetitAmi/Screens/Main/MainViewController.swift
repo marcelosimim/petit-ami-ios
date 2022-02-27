@@ -11,6 +11,8 @@ import Firebase
 import FirebaseAuth
 
 class MainViewController: UIViewController {
+    
+    let repository: RepositoryProtocol = AppContainer.shared.resolve(RepositoryProtocol.self)!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +22,7 @@ class MainViewController: UIViewController {
         addComponents()
         addConstraints()
         loadCover()
+        getUserProgress()
     }
     
     //MARK: - Components
@@ -36,7 +39,7 @@ class MainViewController: UIViewController {
        let progressView = UIProgressView()
         progressView.clipsToBounds = true
         progressView.layer.cornerRadius = 5
-        progressView.progress = 0.8
+        progressView.progress = 0.0
         progressView.trackTintColor = K.progressBarTrack
         progressView.progressTintColor = K.progressBarProgress
         progressView.translatesAutoresizingMaskIntoConstraints = false
@@ -94,9 +97,19 @@ class MainViewController: UIViewController {
 
 extension MainViewController: ViewConfiguration {
     
+    func getUserProgress(){
+        repository.getUserProgress { data, error in
+            guard let data = data else {
+                print(error)
+                return
+            }
+            
+            self.progressBar.progress = data/100.0
+        }
+    }
+    
     func loadCover() {
         activityIndicator.startAnimating()
-        let repository: RepositoryProtocol = AppContainer.shared.resolve(RepositoryProtocol.self)!
         
         repository.getCoverImage(for: 1) { data, error in
             guard let data = data else {
