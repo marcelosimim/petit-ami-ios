@@ -9,7 +9,7 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
-    let loginViewModel = LoginViewModel()
+    let loginViewModel = AppContainer.shared.resolve(LoginViewModel.self)!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,7 +74,7 @@ class LoginViewController: UIViewController {
         loginViewModel.login(with: email, and: password)
         
         loginViewModel.loginSuccedd = {
-            let newController = MainViewController()
+            let newController = HomeViewController()
             self.navigationController?.pushViewController(newController, animated: true)
         }
         
