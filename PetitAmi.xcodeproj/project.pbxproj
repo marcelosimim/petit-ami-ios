@@ -10,6 +10,9 @@
 		434B7ADD8523FDD13DC5495B /* Pods_PetitAmiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6765990D00D70AA76D12F59 /* Pods_PetitAmiTests.framework */; };
 		8D8CD45CE96891C88A46B419 /* Pods_PetitAmi_PetitAmiUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5AE0FAF1B1FB4B29CD0D3EC /* Pods_PetitAmi_PetitAmiUITests.framework */; };
 		A30F21BC27CBBEDB0088027E /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30F21BB27CBBEDB0088027E /* LoginViewModel.swift */; };
+		A30F21C027CBD4B10088027E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30F21BF27CBD4B10088027E /* HomeViewController.swift */; };
+		A30F21C227CBD51E0088027E /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30F21C127CBD51E0088027E /* HomeViewModel.swift */; };
+		A30F21C427CBD5330088027E /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30F21C327CBD5330088027E /* HomeModel.swift */; };
 		A395126427CB0D9B007BA391 /* ListenAndRepeatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A395126327CB0D9B007BA391 /* ListenAndRepeatViewController.swift */; };
 		A39C177727C9C3B800CB64AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C177627C9C3B800CB64AD /* AppDelegate.swift */; };
 		A39C177927C9C3B800CB64AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C177827C9C3B800CB64AD /* SceneDelegate.swift */; };
@@ -28,7 +31,6 @@
 		A3E3FF2627CA77AD0049883D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E3FF2527CA77AD0049883D /* LoginViewController.swift */; };
 		A3E3FF2927CA78730049883D /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E3FF2827CA78730049883D /* RegisterViewController.swift */; };
 		A3E3FF2B27CAB0690049883D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A3E3FF2A27CAB0690049883D /* GoogleService-Info.plist */; };
-		A3E3FF2E27CABE530049883D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E3FF2D27CABE530049883D /* MainViewController.swift */; };
 		D1D86D0FE233BF7B13459584 /* Pods_PetitAmi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B3B69CAA04F8E08C9C60F0E /* Pods_PetitAmi.framework */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +59,9 @@
 		8B3B69CAA04F8E08C9C60F0E /* Pods_PetitAmi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PetitAmi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F87E7E4104908BCB293B6F7 /* Pods-PetitAmi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetitAmi.debug.xcconfig"; path = "Target Support Files/Pods-PetitAmi/Pods-PetitAmi.debug.xcconfig"; sourceTree = "<group>"; };
 		A30F21BB27CBBEDB0088027E /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		A30F21BF27CBD4B10088027E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		A30F21C127CBD51E0088027E /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		A30F21C327CBD5330088027E /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
 		A395126327CB0D9B007BA391 /* ListenAndRepeatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenAndRepeatViewController.swift; sourceTree = "<group>"; };
 		A39C177327C9C3B800CB64AD /* PetitAmi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetitAmi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A39C177627C9C3B800CB64AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,7 +84,6 @@
 		A3E3FF2527CA77AD0049883D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A3E3FF2827CA78730049883D /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		A3E3FF2A27CAB0690049883D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		A3E3FF2D27CABE530049883D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		A9CD110FF90AC525B1696252 /* Pods-PetitAmiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetitAmiTests.release.xcconfig"; path = "Target Support Files/Pods-PetitAmiTests/Pods-PetitAmiTests.release.xcconfig"; sourceTree = "<group>"; };
 		C5AE0FAF1B1FB4B29CD0D3EC /* Pods_PetitAmi_PetitAmiUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PetitAmi_PetitAmiUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6765990D00D70AA76D12F59 /* Pods_PetitAmiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PetitAmiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -203,7 +207,7 @@
 				A39C17A927C9C45000CB64AD /* Initial */,
 				A3E3FF2427CA77960049883D /* Login */,
 				A3E3FF2727CA785F0049883D /* Register */,
-				A3E3FF2C27CABDF00049883D /* Main */,
+				A3E3FF2C27CABDF00049883D /* Home */,
 				A395126227CB0D69007BA391 /* ListenAndRepeat */,
 			);
 			path = Screens;
@@ -286,12 +290,14 @@
 			path = Register;
 			sourceTree = "<group>";
 		};
-		A3E3FF2C27CABDF00049883D /* Main */ = {
+		A3E3FF2C27CABDF00049883D /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				A3E3FF2D27CABE530049883D /* MainViewController.swift */,
+				A30F21BF27CBD4B10088027E /* HomeViewController.swift */,
+				A30F21C127CBD51E0088027E /* HomeViewModel.swift */,
+				A30F21C327CBD5330088027E /* HomeModel.swift */,
 			);
-			path = Main;
+			path = Home;
 			sourceTree = "<group>";
 		};
 		D2DB480C31EB80BE62E298BF /* Frameworks */ = {
@@ -544,7 +550,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3E3FF2E27CABE530049883D /* MainViewController.swift in Sources */,
 				A39C177B27C9C3B800CB64AD /* InitialViewController.swift in Sources */,
 				A39C177727C9C3B800CB64AD /* AppDelegate.swift in Sources */,
 				A39C177927C9C3B800CB64AD /* SceneDelegate.swift in Sources */,
@@ -553,9 +558,12 @@
 				A3D495B627CADFF300DFF5A8 /* AppContainer.swift in Sources */,
 				A3D495AF27CAD74100DFF5A8 /* Firebase.swift in Sources */,
 				A30F21BC27CBBEDB0088027E /* LoginViewModel.swift in Sources */,
+				A30F21C427CBD5330088027E /* HomeModel.swift in Sources */,
 				A395126427CB0D9B007BA391 /* ListenAndRepeatViewController.swift in Sources */,
+				A30F21C227CBD51E0088027E /* HomeViewModel.swift in Sources */,
 				A3D495B327CAD82800DFF5A8 /* Repository.swift in Sources */,
 				A39C17AC27C9C5A300CB64AD /* Constants.swift in Sources */,
+				A30F21C027CBD4B10088027E /* HomeViewController.swift in Sources */,
 				A3D495AC27CAC95500DFF5A8 /* Protocols.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
