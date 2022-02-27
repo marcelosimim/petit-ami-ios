@@ -49,6 +49,24 @@ class ListenAndRepeatViewController: UIViewController {
          return imageView
     }()
     
+    let answerLabel: UILabel = {
+       let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.text = "Sua resposta aparecerá aqui."
+        label.numberOfLines = 5
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let micButton: UIImageView = {
+        let imageView = UIImageView()
+         imageView.image = K.defaultMicIcon
+        imageView.tintColor = UIColor.red
+         imageView.contentMode = .scaleAspectFit
+         imageView.translatesAutoresizingMaskIntoConstraints = false
+         return imageView
+    }()
+    
     //MARK: - Actions
     
     @objc func speakerClicked(){
@@ -59,6 +77,10 @@ class ListenAndRepeatViewController: UIViewController {
         self.player = AVPlayer.init(playerItem: playerItem)
         setupAVPlayer()
         self.player!.play()
+    }
+    
+    @objc func micClicked(){
+        print("mic")
     }
 }
 
@@ -110,6 +132,10 @@ extension ListenAndRepeatViewController: ViewConfiguration {
         view.addSubview(speakerButton)
         speakerButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(speakerClicked)))
         speakerButton.isUserInteractionEnabled = true
+        view.addSubview(answerLabel)
+        view.addSubview(micButton)
+        micButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(micClicked)))
+        micButton.isUserInteractionEnabled = true
     }
     
     func addConstraints() {
@@ -125,7 +151,13 @@ extension ListenAndRepeatViewController: ViewConfiguration {
             speakerButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: K.viewWidthProportion*150),
             speakerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             speakerButton.heightAnchor.constraint(equalToConstant: K.viewHeightProportion*65),
-            
+            answerLabel.topAnchor.constraint(equalTo: speakerButton.bottomAnchor, constant: K.viewHeightProportion*40),
+            answerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: K.viewWidthProportion*38),
+            answerLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            micButton.topAnchor.constraint(equalTo: answerLabel.bottomAnchor, constant: K.viewHeightProportion*70),
+            micButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: K.viewWidthProportion*170),
+            micButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            micButton.heightAnchor.constraint(equalToConstant: K.viewHeightProportion*40),
         ])
     }
 }

@@ -32,4 +32,5 @@ class K {
     static let defaultSoundIcon = UIImage(systemName: "speaker.fill")
     static let waitingSoundIcon = UIImage(systemName: "speaker.zzz.fill")
     static let playingSoundIcon = UIImage(systemName: "speaker.wave.3.fill")
+    static let defaultMicIcon = UIImage(systemName: "mic.fill")
 }
