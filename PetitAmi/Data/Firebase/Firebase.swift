@@ -42,6 +42,9 @@ class Firebase: FirebaseProtocol{
             let unit = document.data()!["unit"] as! Float
             let progress = unit/96.0
             
+            print("unit ", unit)
+            print("progress ", progress)
+            
             completion(progress, error)
         }
     }

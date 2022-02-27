@@ -104,7 +104,7 @@ extension MainViewController: ViewConfiguration {
                 return
             }
             
-            self.progressBar.progress = data/100.0
+            self.progressBar.progress = data
         }
     }
     
