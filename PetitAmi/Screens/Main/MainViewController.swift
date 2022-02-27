@@ -83,7 +83,7 @@ class MainViewController: UIViewController {
     @objc func addTapped() {
         do{
             try Auth.auth().signOut()
-            let newController = HomeViewController()
+            let newController = InitialViewController()
             navigationController?.pushViewController(newController, animated: true)
         }catch let error {
             print(error)

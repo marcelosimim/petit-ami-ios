@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class InitialViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,7 +73,7 @@ class HomeViewController: UIViewController {
 
 //MARK: - View Configuration Protocol
 
-extension HomeViewController: ViewConfiguration {
+extension InitialViewController: ViewConfiguration {
     func addComponents(){
         view.addSubview(homeImage)
         view.addSubview(titleLabel)
