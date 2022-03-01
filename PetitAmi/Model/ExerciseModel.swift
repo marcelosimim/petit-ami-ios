@@ -15,5 +15,5 @@ class ExerciseModel {
     var answer:String?
     var image:UIImage?
     var soundURL:String?
-    //var nextExercise = ExerciseModel()
+    var nextExercise: ExerciseModel?
 }

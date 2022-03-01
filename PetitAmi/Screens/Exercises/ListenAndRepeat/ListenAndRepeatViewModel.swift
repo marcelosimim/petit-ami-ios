@@ -13,6 +13,7 @@ class ListenAndRepeatViewModel {
     var exerciseModel: ExerciseModel?
     
     var onDataResults: ((ExerciseModel?) -> ()) = { data in }
+    var onNextExerciseResult: (() -> ()) = { }
     
     init(repository: RepositoryProtocol){
         self.repository = repository
@@ -50,13 +51,8 @@ class ListenAndRepeatViewModel {
             guard let exercise = self.exerciseModel?.exerciseNumber else {
                 return
             }
-//            if exercise + 1 <= data  {
-//                self.exerciseModel?.nextExercise.unit.unitNumber = self.exerciseModel!.unit.unitNumber
-//                self.exerciseModel?.nextExercise.exerciseNumber = self.exerciseModel!.exerciseNumber!+1
-//            }else{
-//                self.exerciseModel?.nextExercise.unit.unitNumber = self.exerciseModel!.unit.unitNumber!+1
-//                self.exerciseModel?.nextExercise.exerciseNumber = 1
-//            }
+            
+            self.getNextExercise()
         }
     }
     
@@ -89,6 +85,37 @@ class ListenAndRepeatViewModel {
             
             self.exerciseModel?.answer = answer
             self.exerciseModel?.type = type
+        }
+    }
+    
+    func getNextExercise(){
+        self.exerciseModel?.nextExercise = ExerciseModel()
+        
+        if (exerciseModel?.exerciseNumber)! + 1 <= (exerciseModel?.unit.unitSize)!  {
+            exerciseModel?.nextExercise?.unit.unitNumber = exerciseModel!.unit.unitNumber
+            exerciseModel?.nextExercise?.exerciseNumber = exerciseModel!.exerciseNumber!+1
+        }else{
+            exerciseModel?.nextExercise?.unit.unitNumber = exerciseModel!.unit.unitNumber!+1
+            exerciseModel?.nextExercise?.exerciseNumber = 1
+        }
+        
+        repository.getExerciseAnswer(unit: (exerciseModel?.nextExercise?.unit.unitNumber)!, exercise: (exerciseModel?.nextExercise?.exerciseNumber)!) { answer, type, error in
+            guard let type = type else {
+                return
+            }
+            
+            self.exerciseModel?.nextExercise?.type = type
+        }
+    }
+    
+    func goToNextExercise(){
+        repository.setExercise(number: (exerciseModel?.nextExercise?.exerciseNumber)!) { error in
+            guard let error = error else {
+                self.onNextExerciseResult()
+                return
+            }
+
+            print("error")
         }
     }
 }

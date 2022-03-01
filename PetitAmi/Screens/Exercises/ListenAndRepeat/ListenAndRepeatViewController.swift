@@ -83,17 +83,7 @@ class ListenAndRepeatViewController: UIViewController {
     func alert(title:String, message:String, next:Bool){
             let alertController:UIAlertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let ok:UIAlertAction = UIAlertAction(title: "Ok", style: .cancel) { alert in
-            if next {
-                guard let currentExercise = self.exerciseModel.exerciseNumber, let unitSize = self.exerciseModel.unit.unitSize else {
-                    return
-                }
-
-                if currentExercise+1 <= unitSize {
-//                    print("next exercise ainda: \(self.exerciseModel.nextExercise.unit.unitNumber) e \(self.exerciseModel.nextExercise.exerciseNumber)")
-                }else{
-//                    print("next exercise prox: \(self.exerciseModel.nextExercise.unit.unitNumber) e \(self.exerciseModel.nextExercise.exerciseNumber)")
-                }
-            }
+            
         }
             alertController.addAction(ok)
             self.present(alertController, animated: true, completion: nil)
@@ -103,9 +93,21 @@ class ListenAndRepeatViewController: UIViewController {
         voiceOverlayController.start(on: self, textHandler: { (text, finished ,any) in
             if finished {
                 if text.lowercased() == self.exerciseModel.answer?.lowercased() {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        self.alert(title: "Resposta correta!", message: "Parabéns! Voce acertou!", next: true)
-                     }
+                    guard let type = self.exerciseModel.nextExercise?.type else {
+                        return
+                    }
+                    self.listenAndRepeatViewModel.goToNextExercise()
+                    self.listenAndRepeatViewModel.onNextExerciseResult = {
+                        DispatchQueue.main.async {
+                            if type {
+                                
+                            }else {
+                                print("new view conroller")
+                                let newController = ListenAndRepeatViewController()
+                                self.navigationController?.pushViewController(newController, animated: true)
+                            }
+                        }
+                    }
                     
                 }else{
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {

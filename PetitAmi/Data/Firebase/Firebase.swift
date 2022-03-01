@@ -18,6 +18,7 @@ protocol FirebaseProtocol {
     func getExerciseSound(unit u:Int, exercise e:Int, completion: @escaping (String?, Error?) -> Void)
     func getExerciseAnswer(unit u:Int, exercise e:Int, completion: @escaping (String?, Bool?, Error?) -> Void)
     func getUnitInfo(unit u:Int, completion: @escaping (Int?, Error?) -> Void)
+    func setExercise(number:Int, completion: @escaping (Error?) -> Void)
 }
 
 class Firebase: FirebaseProtocol{
@@ -112,6 +113,18 @@ class Firebase: FirebaseProtocol{
             
             let size = document.data()!["size"] as! Int
             completion(size, error)
+        }
+    }
+    
+    func setExercise(number:Int, completion: @escaping (Error?) -> Void) {
+        userRef.updateData([
+            "exercise" : number
+        ]){ error in
+            guard let error = error else {
+                completion(nil)
+                return
+            }
+            completion(error)
         }
     }
 }
