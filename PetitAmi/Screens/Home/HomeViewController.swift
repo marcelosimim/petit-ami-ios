@@ -11,6 +11,7 @@ import Swinject
 class HomeViewController: UIViewController {
     
     let homeViewModel = AppContainer.shared.resolve(HomeViewModel.self)!
+    var currentExerciseType:Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +22,7 @@ class HomeViewController: UIViewController {
         addConstraints()
         loadCover()
         getUserProgress()
+        getCurrentExercise()
     }
     
     //MARK: - Components
@@ -79,8 +81,17 @@ class HomeViewController: UIViewController {
     //MARK: - Actions
     
     @objc func coverClicked(){
-        let newController = ListenAndRepeatViewController()
-        navigationController?.pushViewController(newController, animated: true)
+        guard let currentExerciseType = currentExerciseType else {
+            return
+        }
+
+        if currentExerciseType {
+            let newController = ListenAndAnswerViewController()
+            navigationController?.pushViewController(newController, animated: true)
+        }else {
+            let newController = ListenAndRepeatViewController()
+            navigationController?.pushViewController(newController, animated: true)
+        }
     }
     
     @objc func signOutTapped(){
@@ -126,6 +137,15 @@ extension HomeViewController: ViewConfiguration {
                 self.coverImage.image = data
                 self.coverImage.isHidden = false
                 self.activityIndicator.stopAnimating()
+            }
+        }
+    }
+    
+    func getCurrentExercise() {
+        homeViewModel.getExercise()
+        homeViewModel.onResults = {
+            DispatchQueue.main.async {
+                self.currentExerciseType = self.homeViewModel.exerciseModel?.type
             }
         }
     }

@@ -15,6 +15,8 @@ class HomeViewModel {
     var signOutCompletion : ((Error?) -> ()) = { error in }
     var userProgressCompletion: ((Float?, Error?) -> ()) = { data, error in }
     var loadCoverCompletion: ((UIImage?, Error?) -> ()) = { data, error in }
+    var exerciseModel: ExerciseModel?
+    var onResults: (() -> ()) = { }
     
     func signOutButtonTapped() {
         do{
@@ -43,6 +45,30 @@ class HomeViewModel {
             }
             
             self.loadCoverCompletion(data, nil)
+        }
+    }
+    
+    func getExercise() {
+        repository.getUnitAndExercise { result, error in
+            guard let result = result else {
+                print(error)
+                return
+            }
+
+            let unit = result[0]
+            let exercise = result[1]
+            
+            self.repository.getExerciseAnswer(unit: unit, exercise: exercise) { answer, type, error in
+                guard let type = type else {
+                    print(error)
+                    return
+                }
+                
+                self.exerciseModel = ExerciseModel()
+                self.exerciseModel?.type = type
+                self.onResults()
+            }
+            
         }
     }
 }
