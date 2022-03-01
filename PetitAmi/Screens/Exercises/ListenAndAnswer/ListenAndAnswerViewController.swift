@@ -132,6 +132,18 @@ extension ListenAndAnswerViewController: ViewConfiguration {
             sendAnswerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
+    
+    func customizeNavigationBar(){
+        self.navigationItem.setHidesBackButton(true, animated: false)
+        let signOut = UIBarButtonItem(image: UIImage(systemName: "rectangle.portrait.and.arrow.right"), style: .plain, target: self, action: #selector(goBackToHome))
+        navigationItem.rightBarButtonItems = []
+        navigationItem.rightBarButtonItems = [signOut]
+    }
+    
+    @objc func goBackToHome() {
+        let controller = HomeViewController()
+        navigationController?.pushViewController(controller, animated: true)
+    }
 }
 
 extension ListenAndAnswerViewController: UITextFieldDelegate {

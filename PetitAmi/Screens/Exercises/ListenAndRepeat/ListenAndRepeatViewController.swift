@@ -25,6 +25,7 @@ class ListenAndRepeatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = K.backgroundColor
+        customizeNavigationBar()
         getDatas()
         addComponents()
         addConstraints()
@@ -129,6 +130,18 @@ extension ListenAndRepeatViewController: ViewConfiguration {
             micButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             micButton.heightAnchor.constraint(equalToConstant: K.viewHeightProportion*40),
         ])
+    }
+    
+    func customizeNavigationBar(){
+        self.navigationItem.setHidesBackButton(true, animated: false)
+        let signOut = UIBarButtonItem(image: UIImage(systemName: "rectangle.portrait.and.arrow.right"), style: .plain, target: self, action: #selector(goBackToHome))
+        navigationItem.rightBarButtonItems = []
+        navigationItem.rightBarButtonItems = [signOut]
+    }
+    
+    @objc func goBackToHome() {
+        let controller = HomeViewController()
+        navigationController?.pushViewController(controller, animated: true)
     }
 }
 
