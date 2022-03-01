@@ -12,7 +12,9 @@
 		A30F21BC27CBBEDB0088027E /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30F21BB27CBBEDB0088027E /* LoginViewModel.swift */; };
 		A30F21C027CBD4B10088027E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30F21BF27CBD4B10088027E /* HomeViewController.swift */; };
 		A30F21C227CBD51E0088027E /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30F21C127CBD51E0088027E /* HomeViewModel.swift */; };
-		A30F21C427CBD5330088027E /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30F21C327CBD5330088027E /* HomeModel.swift */; };
+		A30F21C627CC42AC0088027E /* ListenAndRepeatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30F21C527CC42AC0088027E /* ListenAndRepeatViewModel.swift */; };
+		A30F21C927CC441A0088027E /* ExerciseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30F21C827CC441A0088027E /* ExerciseModel.swift */; };
+		A32C398F27CD90EE00CABCB0 /* UnitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32C398E27CD90EE00CABCB0 /* UnitModel.swift */; };
 		A395126427CB0D9B007BA391 /* ListenAndRepeatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A395126327CB0D9B007BA391 /* ListenAndRepeatViewController.swift */; };
 		A39C177727C9C3B800CB64AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C177627C9C3B800CB64AD /* AppDelegate.swift */; };
 		A39C177927C9C3B800CB64AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C177827C9C3B800CB64AD /* SceneDelegate.swift */; };
@@ -61,7 +63,9 @@
 		A30F21BB27CBBEDB0088027E /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		A30F21BF27CBD4B10088027E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		A30F21C127CBD51E0088027E /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		A30F21C327CBD5330088027E /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
+		A30F21C527CC42AC0088027E /* ListenAndRepeatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenAndRepeatViewModel.swift; sourceTree = "<group>"; };
+		A30F21C827CC441A0088027E /* ExerciseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseModel.swift; sourceTree = "<group>"; };
+		A32C398E27CD90EE00CABCB0 /* UnitModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitModel.swift; sourceTree = "<group>"; };
 		A395126327CB0D9B007BA391 /* ListenAndRepeatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenAndRepeatViewController.swift; sourceTree = "<group>"; };
 		A39C177327C9C3B800CB64AD /* PetitAmi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetitAmi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A39C177627C9C3B800CB64AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -130,10 +134,28 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		A30F21C727CC43FF0088027E /* Exercises */ = {
+			isa = PBXGroup;
+			children = (
+				A395126227CB0D69007BA391 /* ListenAndRepeat */,
+			);
+			path = Exercises;
+			sourceTree = "<group>";
+		};
+		A32C398D27CD90DD00CABCB0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A32C398E27CD90EE00CABCB0 /* UnitModel.swift */,
+				A30F21C827CC441A0088027E /* ExerciseModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		A395126227CB0D69007BA391 /* ListenAndRepeat */ = {
 			isa = PBXGroup;
 			children = (
 				A395126327CB0D9B007BA391 /* ListenAndRepeatViewController.swift */,
+				A30F21C527CC42AC0088027E /* ListenAndRepeatViewModel.swift */,
 			);
 			path = ListenAndRepeat;
 			sourceTree = "<group>";
@@ -163,6 +185,7 @@
 		A39C177527C9C3B800CB64AD /* PetitAmi */ = {
 			isa = PBXGroup;
 			children = (
+				A32C398D27CD90DD00CABCB0 /* Model */,
 				A3D495B027CAD80C00DFF5A8 /* Data */,
 				A3D495B427CADFD600DFF5A8 /* Dependency Injection */,
 				A39C17AA27C9C58D00CB64AD /* Common */,
@@ -208,7 +231,7 @@
 				A3E3FF2427CA77960049883D /* Login */,
 				A3E3FF2727CA785F0049883D /* Register */,
 				A3E3FF2C27CABDF00049883D /* Home */,
-				A395126227CB0D69007BA391 /* ListenAndRepeat */,
+				A30F21C727CC43FF0088027E /* Exercises */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -295,7 +318,6 @@
 			children = (
 				A30F21BF27CBD4B10088027E /* HomeViewController.swift */,
 				A30F21C127CBD51E0088027E /* HomeViewModel.swift */,
-				A30F21C327CBD5330088027E /* HomeModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -556,14 +578,16 @@
 				A3E3FF2927CA78730049883D /* RegisterViewController.swift in Sources */,
 				A3E3FF2627CA77AD0049883D /* LoginViewController.swift in Sources */,
 				A3D495B627CADFF300DFF5A8 /* AppContainer.swift in Sources */,
+				A32C398F27CD90EE00CABCB0 /* UnitModel.swift in Sources */,
 				A3D495AF27CAD74100DFF5A8 /* Firebase.swift in Sources */,
+				A30F21C927CC441A0088027E /* ExerciseModel.swift in Sources */,
 				A30F21BC27CBBEDB0088027E /* LoginViewModel.swift in Sources */,
-				A30F21C427CBD5330088027E /* HomeModel.swift in Sources */,
 				A395126427CB0D9B007BA391 /* ListenAndRepeatViewController.swift in Sources */,
 				A30F21C227CBD51E0088027E /* HomeViewModel.swift in Sources */,
 				A3D495B327CAD82800DFF5A8 /* Repository.swift in Sources */,
 				A39C17AC27C9C5A300CB64AD /* Constants.swift in Sources */,
 				A30F21C027CBD4B10088027E /* HomeViewController.swift in Sources */,
+				A30F21C627CC42AC0088027E /* ListenAndRepeatViewModel.swift in Sources */,
 				A3D495AC27CAC95500DFF5A8 /* Protocols.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

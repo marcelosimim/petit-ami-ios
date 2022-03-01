@@ -18,7 +18,7 @@ class AppContainer {
         }
         container.register(LoginViewModel.self) {_ in LoginViewModel()}
         container.register(HomeViewModel.self) {_ in HomeViewModel()}
-        
+        container.register(ListenAndRepeatViewModel.self) { r in ListenAndRepeatViewModel(repository: r.resolve(RepositoryProtocol.self)!)}
         return container
     }()
 }

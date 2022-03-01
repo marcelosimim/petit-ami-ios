@@ -12,12 +12,9 @@ import InstantSearchVoiceOverlay
 class ListenAndRepeatViewController: UIViewController {
     
     let repository: RepositoryProtocol = AppContainer.shared.resolve(RepositoryProtocol.self)!
-    var soundURL: String = ""
+    let listenAndRepeatViewModel = AppContainer.shared.resolve(ListenAndRepeatViewModel.self)!
+    var exerciseModel = ExerciseModel()
     var player: AVPlayer?
-    var correctAnswer = ""
-    var exerciseType = false
-    var unitSize: Int?
-    var currentExercise: Int?
     
     let voiceOverlayController: VoiceOverlayController = {
           let recordableHandler = {
@@ -76,7 +73,7 @@ class ListenAndRepeatViewController: UIViewController {
     @objc func speakerClicked(){
         NotificationCenter.default.addObserver(self, selector: #selector(audioDidEnded), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
         speakerButton.image = K.waitingSoundIcon
-        let sound = URL.init(string: soundURL)
+        let sound = URL.init(string: exerciseModel.soundURL ?? "")
         let playerItem = AVPlayerItem.init(url: sound!)
         self.player = AVPlayer.init(playerItem: playerItem)
         setupAVPlayer()
@@ -87,14 +84,14 @@ class ListenAndRepeatViewController: UIViewController {
             let alertController:UIAlertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let ok:UIAlertAction = UIAlertAction(title: "Ok", style: .cancel) { alert in
             if next {
-                guard let currentExercise = self.currentExercise, let unitSize = self.unitSize else {
+                guard let currentExercise = self.exerciseModel.exerciseNumber, let unitSize = self.exerciseModel.unit.unitSize else {
                     return
                 }
 
                 if currentExercise+1 <= unitSize {
-                    //next exercise + update ui or navigate
+//                    print("next exercise ainda: \(self.exerciseModel.nextExercise.unit.unitNumber) e \(self.exerciseModel.nextExercise.exerciseNumber)")
                 }else{
-                    //next unit + update ui or navigate
+//                    print("next exercise prox: \(self.exerciseModel.nextExercise.unit.unitNumber) e \(self.exerciseModel.nextExercise.exerciseNumber)")
                 }
             }
         }
@@ -104,10 +101,8 @@ class ListenAndRepeatViewController: UIViewController {
     
     @objc func micClicked(){
         voiceOverlayController.start(on: self, textHandler: { (text, finished ,any) in
-            print("voice output: \(String(describing: text))")
-            print("voice output: is it final? \(String(describing: finished))")
             if finished {
-                if text.lowercased() == self.correctAnswer.lowercased() {
+                if text.lowercased() == self.exerciseModel.answer?.lowercased() {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         self.alert(title: "Resposta correta!", message: "Parabéns! Voce acertou!", next: true)
                      }
@@ -116,7 +111,7 @@ class ListenAndRepeatViewController: UIViewController {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         self.alert(title: "Resposta incorreta...", message: "Ops... Tente novamente!", next: false)
                     }
-                    print(self.correctAnswer, " vs ", text)
+                    print(self.exerciseModel.answer, " vs ", text)
                 }
             }
                 }, errorHandler: { (error) in
@@ -130,64 +125,19 @@ class ListenAndRepeatViewController: UIViewController {
 extension ListenAndRepeatViewController: ViewConfiguration {
     
     func getDatas(){
-        repository.getUnitAndExercise { data, error in
-            guard let data = data else {
-                print(error)
-                return
-            }
-            self.currentExercise = data[1]
-            self.title = "Unité \(data[0]) - \(data[1])"
-            self.getUnitSize(unit: data[0])
-            self.loadExerciseImage(unit: data[0], exercise: data[1])
-            self.getExerciseSound(unit: data[0], exercise: data[1])
-            self.getExerciseAnswer(unit: data[0], exercise: data[1])
-        }
-    }
-    
-    func getUnitSize(unit: Int){
-        repository.getUnitInfo(unit: unit) { data, error in
-            guard let data = data else {
-                print(error)
-                return
-            }
-            
-            self.unitSize = data
-        }
-    }
-    
-    func loadExerciseImage(unit:Int, exercise: Int){
+        listenAndRepeatViewModel.getData()
         activityIndicator.startAnimating()
-        
-        repository.getExerciseImage(unit: unit, exercise: exercise) { data, error in
-            guard let data = data else {
-                print(error)
-                return
+        listenAndRepeatViewModel.onDataResults = { data in
+            DispatchQueue.main.async {
+                guard let exerciseModel = self.listenAndRepeatViewModel.exerciseModel else {
+                    return
+                }
+                self.exerciseModel = exerciseModel
+                self.activityIndicator.stopAnimating()
+                self.exerciseImage.image = self.exerciseModel.image
+                self.exerciseImage.isHidden = false
+                self.speakerButton.tintColor = UIColor.systemRed
             }
-            
-            self.activityIndicator.stopAnimating()
-            self.exerciseImage.image = data
-            self.exerciseImage.isHidden = false
-        }
-    }
-    
-    func getExerciseSound(unit:Int, exercise: Int){
-        repository.getExerciseSound(unit: unit, exercise: exercise) { url, error in
-            guard let url = url else {
-                return
-            }
-            self.soundURL = url
-            self.speakerButton.tintColor = UIColor.systemRed
-        }
-    }
-    
-    func getExerciseAnswer(unit:Int, exercise: Int){
-        repository.getExerciseAnswer(unit: unit, exercise: exercise) { answer, type, error in
-            guard let answer = answer, let type = type else {
-                return
-            }
-            
-            self.correctAnswer = answer
-            self.exerciseType = type
         }
     }
     
@@ -253,8 +203,11 @@ extension ListenAndRepeatViewController {
             voiceOverlayController.settings.layout.inputScreen.subtitleInitial = ""
             voiceOverlayController.settings.layout.inputScreen.subtitleBullet = ""
             voiceOverlayController.settings.layout.inputScreen.subtitleBulletList = []
-            voiceOverlayController.settings.layout.inputScreen.titleInProgress = correctAnswer
-            voiceOverlayController.settings.layout.inputScreen.titleListening = correctAnswer
+        guard let correctAnswer = exerciseModel.answer else {
+            return
+        }
+        voiceOverlayController.settings.layout.inputScreen.titleInProgress = correctAnswer
+        voiceOverlayController.settings.layout.inputScreen.titleListening = correctAnswer
     }
     
     
