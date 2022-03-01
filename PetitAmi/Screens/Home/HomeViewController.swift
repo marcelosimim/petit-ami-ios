@@ -61,6 +61,14 @@ class HomeViewController: UIViewController {
         return label
     }()
     
+    lazy var keepStudingArea: UIView = {
+        let view = UIView()
+        view.layer.backgroundColor = K.areaColor?.cgColor
+        view.layer.cornerRadius = 20
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     let progressTitle: UILabel = {
        let label = UILabel()
         label.text = "Seu progresso:"
@@ -102,6 +110,14 @@ class HomeViewController: UIViewController {
         activityIndicatorView.hidesWhenStopped = true
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         return activityIndicatorView
+    }()
+    
+    lazy var unitArea: UIView = {
+        let view = UIView()
+        view.layer.backgroundColor = K.areaColor?.cgColor
+        view.layer.cornerRadius = 20
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     //MARK: - Navigation Bar
@@ -151,6 +167,9 @@ extension HomeViewController: ViewConfiguration {
         view.addSubview(perfilArea)
         view.addSubview(welcomeLabel)
         view.addSubview(userInfoLabel)
+        view.addSubview(keepStudingArea)
+        
+        view.addSubview(unitArea)
 //        view.addSubview(progressTitle)
 //        view.addSubview(progressBar)
 //        view.addSubview(keepStudyingLabel)
@@ -162,7 +181,7 @@ extension HomeViewController: ViewConfiguration {
     
     func addConstraints() {
         let imageSize: CGFloat = K.viewWidthProportion*100
-        let horizontalDistance: CGFloat = 46
+        let horizontalDistance: CGFloat = 20
         NSLayoutConstraint.activate([
             headerArea.topAnchor.constraint(equalTo: view.topAnchor),
             headerArea.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -176,7 +195,16 @@ extension HomeViewController: ViewConfiguration {
             welcomeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: K.viewWidthProportion*138),
             userInfoLabel.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: K.viewHeightProportion*10),
             userInfoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: K.viewWidthProportion*138),
+            keepStudingArea.topAnchor.constraint(equalTo: headerArea.bottomAnchor, constant: K.viewHeightProportion*32),
+            keepStudingArea.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: K.viewWidthProportion*horizontalDistance),
+            keepStudingArea.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            keepStudingArea.heightAnchor.constraint(equalToConstant: K.viewHeightProportion*268),
             
+            
+            unitArea.topAnchor.constraint(equalTo: keepStudingArea.bottomAnchor, constant: K.viewHeightProportion*32),
+            unitArea.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: K.viewWidthProportion*horizontalDistance),
+            unitArea.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 50),
+            unitArea.heightAnchor.constraint(equalToConstant: K.viewHeightProportion*230),
             //            progressTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 70*K.viewHeightProportion),
 //            progressTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalDistance*K.viewWidthProportion),
 //            progressTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),

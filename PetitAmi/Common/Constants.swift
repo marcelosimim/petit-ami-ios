@@ -16,6 +16,7 @@ class K {
     
     //MARK: - Colors
     static let backgroundColor = UIColor(named: "Background")
+    static let areaColor = UIColor(named: "Area")
     static let primaryColor = UIColor(named: "Primary")
     static let buttonColor = UIColor(named: "Button")
     static let textFieldColor = UIColor(named: "TextField")
