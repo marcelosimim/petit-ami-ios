@@ -17,9 +17,11 @@ protocol RepositoryProtocol {
     func getExerciseAnswer(unit u:Int, exercise e:Int, completion: @escaping (String?, Bool?, Error?) -> Void)
     func getUnitInfo(unit u:Int, completion: @escaping (Int?, Error?) -> Void)
     func setExercise(number:Int, completion: @escaping (Error?) -> Void)
+    func addNewUser(user:UserModel, completion: @escaping (Error?) -> Void)
 }
 
 class Repository: RepositoryProtocol {
+    //MARK: - Exercises Section
     
     let firebase: FirebaseProtocol
     
@@ -29,10 +31,6 @@ class Repository: RepositoryProtocol {
     
     func getCoverImage(for unit: Int, completion: @escaping (UIImage?, Error?) -> Void) {
         firebase.getCoverImage(for: unit, completion: completion)
-    }
-    
-    func getUserProgress(completion: @escaping (Float?, Error?) -> Void){
-        firebase.getUserProgress(completion: completion)
     }
     
     func getUnitAndExercise(completion: @escaping ([Int]?, Error?) -> Void){
@@ -57,5 +55,15 @@ class Repository: RepositoryProtocol {
     
     func setExercise(number:Int, completion: @escaping (Error?) -> Void){
         firebase.setExercise(number: number, completion: completion)
+    }
+    
+    //MARK: - User Section
+    
+    func getUserProgress(completion: @escaping (Float?, Error?) -> Void){
+        firebase.getUserProgress(completion: completion)
+    }
+    
+    func addNewUser(user: UserModel, completion: @escaping (Error?) -> Void) {
+        firebase.addNewUser(user: user, completion: completion)
     }
 }
