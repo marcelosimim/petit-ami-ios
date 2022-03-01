@@ -71,8 +71,9 @@ class HomeViewController: UIViewController {
     
     let progressTitle: UILabel = {
        let label = UILabel()
-        label.text = "Seu progresso:"
-        label.font = UIFont.systemFont(ofSize: K.viewHeightProportion*20, weight: .medium)
+        label.text = "Progresso"
+        label.textColor = UIColor.white
+        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -90,8 +91,10 @@ class HomeViewController: UIViewController {
     
     let keepStudyingLabel: UILabel = {
         let label = UILabel()
-         label.text = "Continue estudando:"
-         label.font = UIFont.systemFont(ofSize: K.viewHeightProportion*20, weight: .medium)
+         label.text = "Continue estudando"
+         label.numberOfLines = 0
+         label.textColor = UIColor.white
+         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
          label.translatesAutoresizingMaskIntoConstraints = false
          return label
     }()
@@ -99,7 +102,7 @@ class HomeViewController: UIViewController {
     let coverImage: UIImageView = {
        let imageView = UIImageView()
         imageView.image = K.notFoundedImage
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.isHidden = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -168,12 +171,15 @@ extension HomeViewController: ViewConfiguration {
         view.addSubview(welcomeLabel)
         view.addSubview(userInfoLabel)
         view.addSubview(keepStudingArea)
+        view.addSubview(progressTitle)
+        view.addSubview(progressBar)
+        view.addSubview(coverImage)
+        view.addSubview(keepStudyingLabel)
         
         view.addSubview(unitArea)
-//        view.addSubview(progressTitle)
-//        view.addSubview(progressBar)
-//        view.addSubview(keepStudyingLabel)
-//        view.addSubview(coverImage)
+        
+        
+        
 //        view.addSubview(activityIndicator)
 //        coverImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(coverClicked)))
 //        coverImage.isUserInteractionEnabled = true
@@ -198,27 +204,30 @@ extension HomeViewController: ViewConfiguration {
             keepStudingArea.topAnchor.constraint(equalTo: headerArea.bottomAnchor, constant: K.viewHeightProportion*32),
             keepStudingArea.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: K.viewWidthProportion*horizontalDistance),
             keepStudingArea.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            keepStudingArea.heightAnchor.constraint(equalToConstant: K.viewHeightProportion*268),
-            
+            keepStudingArea.heightAnchor.constraint(equalToConstant: K.viewHeightProportion*280),
+            progressTitle.topAnchor.constraint(equalTo: keepStudingArea.topAnchor, constant: 16*K.viewHeightProportion),
+            progressTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 46*K.viewWidthProportion),
+            progressTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            progressBar.topAnchor.constraint(equalTo: progressTitle.bottomAnchor, constant: 12*K.viewHeightProportion),
+            progressBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 46*K.viewWidthProportion),
+            progressBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            progressBar.heightAnchor.constraint(equalToConstant: 10*K.viewHeightProportion),
+            coverImage.topAnchor.constraint(equalTo: progressBar.bottomAnchor, constant: 30*K.viewHeightProportion),
+            coverImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 130*K.viewWidthProportion),
+            coverImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            coverImage.heightAnchor.constraint(equalToConstant: 150*K.viewHeightProportion),
+            keepStudyingLabel.topAnchor.constraint(equalTo: coverImage.bottomAnchor, constant: 10*K.viewHeightProportion),
+            keepStudyingLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             unitArea.topAnchor.constraint(equalTo: keepStudingArea.bottomAnchor, constant: K.viewHeightProportion*32),
             unitArea.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: K.viewWidthProportion*horizontalDistance),
             unitArea.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 50),
             unitArea.heightAnchor.constraint(equalToConstant: K.viewHeightProportion*230),
-            //            progressTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 70*K.viewHeightProportion),
-//            progressTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalDistance*K.viewWidthProportion),
-//            progressTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            progressBar.topAnchor.constraint(equalTo: progressTitle.bottomAnchor, constant: 24*K.viewHeightProportion),
-//            progressBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalDistance*K.viewWidthProportion),
-//            progressBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            progressBar.heightAnchor.constraint(equalToConstant: 15*K.viewHeightProportion),
-//            keepStudyingLabel.topAnchor.constraint(equalTo: progressBar.bottomAnchor, constant: 48*K.viewHeightProportion),
-//            keepStudyingLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalDistance*K.viewWidthProportion),
-//            keepStudyingLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            coverImage.topAnchor.constraint(equalTo: keepStudyingLabel.bottomAnchor, constant: 24*K.viewHeightProportion),
-//            coverImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 126*K.viewWidthProportion),
-//            coverImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            coverImage.heightAnchor.constraint(equalToConstant: 200*K.viewHeightProportion),
+                        
+            
+            
+            
+            
 //            activityIndicator.topAnchor.constraint(equalTo: keepStudyingLabel.bottomAnchor, constant: 100*K.viewHeightProportion),
 //            activityIndicator.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 126*K.viewWidthProportion),
 //            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
