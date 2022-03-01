@@ -31,7 +31,6 @@ class LoginViewController: UIViewController {
     
     let emailTextField: UITextField = {
        let textField = UITextField()
-        textField.text = "marcelo@adm.com"
         textField.placeholder = "Email"
         textField.layer.cornerRadius = 8
         textField.layer.backgroundColor = K.textFieldColor?.cgColor
@@ -43,7 +42,6 @@ class LoginViewController: UIViewController {
     
     let passwordTextField: UITextField = {
        let textField = UITextField()
-        textField.text = "123456"
         textField.placeholder = "Senha"
         textField.layer.cornerRadius = 8
         textField.layer.backgroundColor = K.textFieldColor?.cgColor
@@ -91,7 +89,6 @@ class LoginViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
-    
 }
 
 //MARK: - View Configuration Protocol

@@ -8,6 +8,8 @@
 import UIKit
 
 class RegisterViewController: UIViewController {
+    
+    let registerViewModel = AppContainer.shared.resolve(RegisterViewModel.self)!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +25,7 @@ class RegisterViewController: UIViewController {
         textField.backgroundColor = K.textFieldColor
         textField.layer.cornerRadius = 5
         textField.keyboardType = .emailAddress
+        textField.autocapitalizationType = .none
         textField.delegate = self
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
@@ -63,10 +66,10 @@ class RegisterViewController: UIViewController {
         button.setTitle("ENVIAR", for: .normal)
         button.backgroundColor = K.buttonColor
         button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(sendButtonClicked), for: .touchDown)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
 }
 
 extension RegisterViewController: ViewConfiguration {
@@ -83,13 +86,13 @@ extension RegisterViewController: ViewConfiguration {
         let leading: CGFloat = K.viewWidthProportion * 42
         let top: CGFloat = K.viewHeightProportion * 42
         NSLayoutConstraint.activate([
-            emailTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: K.viewHeightProportion*130),
-            emailTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leading),
-            emailTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nameTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: top),
+            nameTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: K.viewHeightProportion*130),
             nameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leading),
             nameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            passwordTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: top),
+            emailTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: top),
+            emailTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leading),
+            emailTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: top),
             passwordTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leading),
             passwordTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             confirmPasswordTextField.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: top),
@@ -111,21 +114,71 @@ extension RegisterViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         switch textField {
             case emailTextField:
-                print("email")
+                guard let email = emailTextField.text else {
+                    setInvalidTextField(emailTextField)
+                    return true
+                }
+                email.isValidEmail() ? setValidTextField(emailTextField) : setInvalidTextField(emailTextField)
                 break
             case nameTextField:
-                print("name")
-                break
-            case passwordTextField:
-                print("password")
-                break
-            case confirmPasswordTextField:
-                print("confirm")
+                guard let name = nameTextField.text else {
+                    setInvalidTextField(nameTextField)
+                    return true
+                }
+                name != "" ? setValidTextField(nameTextField) : setInvalidTextField(nameTextField)
                 break
             default:
                 break
         }
-        
         return true
+    }
+}
+
+//MARK: - Validations
+
+extension String {
+    func isValidEmail() -> Bool {
+        let regex = try! NSRegularExpression(pattern: "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", options: .caseInsensitive)
+        return regex.firstMatch(in: self, options: [], range: NSRange(location: 0, length: count)) != nil
+    }
+}
+
+extension RegisterViewController {
+    
+    func setValidTextField(_ textField:UITextField) {
+        textField.layer.borderWidth = 0
+    }
+    
+    func setInvalidTextField(_ textField:UITextField) {
+        textField.layer.borderWidth = 2
+        textField.layer.borderColor = UIColor.systemRed.cgColor
+    }
+    
+    func isValidName(_ name: String) -> Bool {
+        name.count > 0
+    }
+    
+    func passwordMatch(password:String, confirmPassword: String) -> Bool {
+        password == confirmPassword
+    }
+    
+    @objc func sendButtonClicked() {
+        registerViewModel.register(name: nameTextField.text!, email: emailTextField.text!, password: passwordTextField.text!)
+        registerViewModel.onRegisterCompleted = { error in
+            guard let error = error else {
+                let newController = HomeViewController()
+                self.navigationController?.pushViewController(newController, animated: true)
+                return
+            }
+            self.showAlert(with: error.localizedDescription)
+        }
+    }
+    
+    //MARK: - Alert
+    
+    func showAlert(with message:String){
+        let alert = UIAlertController(title: "Erro ao logar", message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }

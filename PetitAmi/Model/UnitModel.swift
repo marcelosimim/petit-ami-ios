@@ -7,7 +7,7 @@
 
 import Foundation
 
-class UnitModel {
+struct UnitModel {
     var unitNumber: Int?
     var unitSize: Int?
 }
