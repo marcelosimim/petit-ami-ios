@@ -17,12 +17,12 @@ class ListenAndRepeatViewController: UIViewController {
     var player: AVPlayer?
     
     let voiceOverlayController: VoiceOverlayController = {
-          let recordableHandler = {
+        let recordableHandler = {
             return SpeechController(locale: Locale(identifier: "fr_FR"))
-          }
-          return VoiceOverlayController(speechControllerHandler: recordableHandler)
-        }()
-
+        }
+        return VoiceOverlayController(speechControllerHandler: recordableHandler)
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = K.backgroundColor
@@ -35,7 +35,7 @@ class ListenAndRepeatViewController: UIViewController {
     //MARK: - UI Components
     
     let exerciseImage: UIImageView = {
-       let imageView = UIImageView()
+        let imageView = UIImageView()
         imageView.image = K.notFoundedImage
         imageView.isHidden = true
         imageView.contentMode = .scaleAspectFit
@@ -44,7 +44,7 @@ class ListenAndRepeatViewController: UIViewController {
     }()
     
     let activityIndicator: UIActivityIndicatorView  = {
-       let activityIndicatorView = UIActivityIndicatorView()
+        let activityIndicatorView = UIActivityIndicatorView()
         activityIndicatorView.hidesWhenStopped = true
         activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         return activityIndicatorView
@@ -52,73 +52,31 @@ class ListenAndRepeatViewController: UIViewController {
     
     let speakerButton: UIImageView = {
         let imageView = UIImageView()
-         imageView.image = K.defaultSoundIcon
-         imageView.tintColor = UIColor(red: 0.796, green: 0.796, blue: 0.796, alpha: 1)
-         imageView.contentMode = .scaleAspectFit
-         imageView.translatesAutoresizingMaskIntoConstraints = false
-         return imageView
+        imageView.image = K.defaultSoundIcon
+        imageView.tintColor = UIColor(red: 0.796, green: 0.796, blue: 0.796, alpha: 1)
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
     }()
     
     let micButton: UIImageView = {
         let imageView = UIImageView()
-         imageView.image = K.defaultMicIcon
+        imageView.image = K.defaultMicIcon
         imageView.tintColor = UIColor.red
-         imageView.contentMode = .scaleAspectFit
-         imageView.translatesAutoresizingMaskIntoConstraints = false
-         return imageView
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
     }()
     
     //MARK: - Actions
     
-    @objc func speakerClicked(){
-        NotificationCenter.default.addObserver(self, selector: #selector(audioDidEnded), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
-        speakerButton.image = K.waitingSoundIcon
-        let sound = URL.init(string: exerciseModel.soundURL ?? "")
-        let playerItem = AVPlayerItem.init(url: sound!)
-        self.player = AVPlayer.init(playerItem: playerItem)
-        setupAVPlayer()
-        self.player!.play()
-    }
-    
     func alert(title:String, message:String, next:Bool){
-            let alertController:UIAlertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertController:UIAlertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let ok:UIAlertAction = UIAlertAction(title: "Ok", style: .cancel) { alert in
             
         }
-            alertController.addAction(ok)
-            self.present(alertController, animated: true, completion: nil)
-        }
-    
-    @objc func micClicked(){
-        voiceOverlayController.start(on: self, textHandler: { (text, finished ,any) in
-            if finished {
-                if text.lowercased() == self.exerciseModel.answer?.lowercased() {
-                    guard let type = self.exerciseModel.nextExercise?.type else {
-                        return
-                    }
-                    self.listenAndRepeatViewModel.goToNextExercise()
-                    self.listenAndRepeatViewModel.onNextExerciseResult = {
-                        DispatchQueue.main.async {
-                            if type {
-                                
-                            }else {
-                                print("new view conroller")
-                                let newController = ListenAndRepeatViewController()
-                                self.navigationController?.pushViewController(newController, animated: true)
-                            }
-                        }
-                    }
-                    
-                }else{
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        self.alert(title: "Resposta incorreta...", message: "Ops... Tente novamente!", next: false)
-                    }
-                    print(self.exerciseModel.answer, " vs ", text)
-                }
-            }
-                }, errorHandler: { (error) in
-                    print("voice output: error \(String(describing: error))")
-                })
+        alertController.addAction(ok)
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -179,6 +137,16 @@ extension ListenAndRepeatViewController: ViewConfiguration {
 
 extension ListenAndRepeatViewController {
     
+    @objc func speakerClicked(){
+        NotificationCenter.default.addObserver(self, selector: #selector(audioDidEnded), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
+        speakerButton.image = K.waitingSoundIcon
+        let sound = URL.init(string: exerciseModel.soundURL ?? "")
+        let playerItem = AVPlayerItem.init(url: sound!)
+        self.player = AVPlayer.init(playerItem: playerItem)
+        setupAVPlayer()
+        self.player!.play()
+    }
+    
     @objc func audioDidEnded(){
         speakerButton.image = K.defaultSoundIcon
         NotificationCenter.default.removeObserver(self)
@@ -188,12 +156,12 @@ extension ListenAndRepeatViewController {
         player!.addObserver(self, forKeyPath: "status", options: [.old, .new], context: nil)
         self.player!.addObserver(self, forKeyPath: "timeControlStatus", options: [.old, .new], context: nil)
     }
-
+    
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if object as AnyObject? === self.player! {
-                if player!.timeControlStatus == .playing {
-                    speakerButton.image = K.playingSoundIcon
-                }
+            if player!.timeControlStatus == .playing {
+                speakerButton.image = K.playingSoundIcon
+            }
         }
     }
 }
@@ -201,10 +169,11 @@ extension ListenAndRepeatViewController {
 //MARK: - Instant Search VoiceOverlay
 
 extension ListenAndRepeatViewController {
+    
     func voiceOverlaySettings(){
-            voiceOverlayController.settings.layout.inputScreen.subtitleInitial = ""
-            voiceOverlayController.settings.layout.inputScreen.subtitleBullet = ""
-            voiceOverlayController.settings.layout.inputScreen.subtitleBulletList = []
+        voiceOverlayController.settings.layout.inputScreen.subtitleInitial = ""
+        voiceOverlayController.settings.layout.inputScreen.subtitleBullet = ""
+        voiceOverlayController.settings.layout.inputScreen.subtitleBulletList = []
         guard let correctAnswer = exerciseModel.answer else {
             return
         }
@@ -212,5 +181,35 @@ extension ListenAndRepeatViewController {
         voiceOverlayController.settings.layout.inputScreen.titleListening = correctAnswer
     }
     
-    
+    @objc func micClicked(){
+        voiceOverlayController.start(on: self, textHandler: { (text, finished ,any) in
+            if finished {
+                if text.lowercased() == self.exerciseModel.answer?.lowercased() {
+                    guard let type = self.exerciseModel.nextExercise?.type else {
+                        return
+                    }
+                    self.listenAndRepeatViewModel.goToNextExercise()
+                    self.listenAndRepeatViewModel.onNextExerciseResult = {
+                        DispatchQueue.main.async {
+                            if type {
+                                
+                            }else {
+                                print("new view conroller")
+                                let newController = ListenAndRepeatViewController()
+                                self.navigationController?.pushViewController(newController, animated: true)
+                            }
+                        }
+                    }
+                    
+                }else{
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        self.alert(title: "Resposta incorreta...", message: "Ops... Tente novamente!", next: false)
+                    }
+                    print(self.exerciseModel.answer, " vs ", text)
+                }
+            }
+        }, errorHandler: { (error) in
+            print("voice output: error \(String(describing: error))")
+        })
+    }
 }
