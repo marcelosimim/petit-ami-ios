@@ -1,37 +1,26 @@
 //
-//  ListenAndRepeatViewController.swift
+//  ListenAndAnswerViewController.swift
 //  PetitAmi
 //
-//  Created by Marcelo Simim on 26/02/22.
+//  Created by Marcelo Simim on 28/02/22.
 //
 
 import UIKit
 import AVFoundation
-import InstantSearchVoiceOverlay
 
-class ListenAndRepeatViewController: UIViewController {
+class ListenAndAnswerViewController: UIViewController {
     
-    let listenAndRepeatViewModel = AppContainer.shared.resolve(ListenAndRepeatViewModel.self)!
+    let listenAndAnswerViewModel: ListenAndAnswerViewModel = AppContainer.shared.resolve(ListenAndAnswerViewModel.self)!
     var exerciseModel = ExerciseModel()
     var player: AVPlayer?
-    
-    let voiceOverlayController: VoiceOverlayController = {
-        let recordableHandler = {
-            return SpeechController(locale: Locale(identifier: "fr_FR"))
-        }
-        return VoiceOverlayController(speechControllerHandler: recordableHandler)
-    }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = K.backgroundColor
-        getDatas()
         addComponents()
         addConstraints()
-        voiceOverlaySettings()
+        getDatas()
     }
-    
-    //MARK: - UI Components
     
     let exerciseImage: UIImageView = {
         let imageView = UIImageView()
@@ -58,16 +47,29 @@ class ListenAndRepeatViewController: UIViewController {
         return imageView
     }()
     
-    let micButton: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = K.defaultMicIcon
-        imageView.tintColor = UIColor.red
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
+    lazy var answerTextField: UITextField = {
+       let textField = UITextField()
+        textField.backgroundColor = K.textFieldColor
+        textField.delegate = self
+        textField.layer.cornerRadius = 5
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
     }()
     
-    //MARK: - Actions
+    lazy var sendAnswerButton: UIButton = {
+       let button = UIButton()
+        button.setTitle("ENVIAR", for: .normal)
+        button.backgroundColor = K.buttonColor
+        button.addTarget(self, action: #selector(sendAnswerClicked), for: .touchDown)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    //MARK: - Action
+    
+    @objc func sendAnswerClicked() {
+    
+    }
     
     func alert(title:String, message:String, next:Bool){
         let alertController:UIAlertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -79,16 +81,14 @@ class ListenAndRepeatViewController: UIViewController {
     }
 }
 
-//MARK: - View Configuration Protocol
-
-extension ListenAndRepeatViewController: ViewConfiguration {
+extension ListenAndAnswerViewController: ViewConfiguration {
     
     func getDatas(){
-        listenAndRepeatViewModel.getData()
+        listenAndAnswerViewModel.getData()
         activityIndicator.startAnimating()
-        listenAndRepeatViewModel.onDataResults = { data in
+        listenAndAnswerViewModel.onDataResults = { data in
             DispatchQueue.main.async {
-                guard let exerciseModel = self.listenAndRepeatViewModel.exerciseModel else {
+                guard let exerciseModel = self.listenAndAnswerViewModel.exerciseModel else {
                     return
                 }
                 self.exerciseModel = exerciseModel
@@ -106,9 +106,8 @@ extension ListenAndRepeatViewController: ViewConfiguration {
         view.addSubview(speakerButton)
         speakerButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(speakerClicked)))
         speakerButton.isUserInteractionEnabled = true
-        view.addSubview(micButton)
-        micButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(micClicked)))
-        micButton.isUserInteractionEnabled = true
+        view.addSubview(answerTextField)
+        view.addSubview(sendAnswerButton)
     }
     
     func addConstraints() {
@@ -123,18 +122,57 @@ extension ListenAndRepeatViewController: ViewConfiguration {
             speakerButton.topAnchor.constraint(equalTo: exerciseImage.bottomAnchor, constant: K.viewHeightProportion*54),
             speakerButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: K.viewWidthProportion*150),
             speakerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            speakerButton.heightAnchor.constraint(equalToConstant: K.viewHeightProportion*65),
-            micButton.topAnchor.constraint(equalTo: view.bottomAnchor, constant: K.viewHeightProportion*70*(-1)),
-            micButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: K.viewWidthProportion*170),
-            micButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            micButton.heightAnchor.constraint(equalToConstant: K.viewHeightProportion*40),
+            speakerButton.heightAnchor.constraint(equalToConstant: K.viewHeightProportion*50),
+            answerTextField.topAnchor.constraint(equalTo: speakerButton.bottomAnchor, constant: K.viewHeightProportion*40),
+            answerTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: K.viewWidthProportion*52),
+            answerTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            answerTextField.heightAnchor.constraint(equalToConstant: K.viewHeightProportion*30),
+            sendAnswerButton.topAnchor.constraint(equalTo: answerTextField.bottomAnchor, constant: K.viewHeightProportion*56),
+            sendAnswerButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: K.viewWidthProportion*128),
+            sendAnswerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
 }
 
+extension ListenAndAnswerViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        answerTextField.resignFirstResponder()
+        
+        guard let answer = exerciseModel.answer, let answered = answerTextField.text else {
+            return true
+        }
+        
+        if answered.lowercased() == answer.lowercased() {
+            guard let type = self.exerciseModel.nextExercise?.type else {
+                return true
+            }
+            self.listenAndAnswerViewModel.goToNextExercise()
+            self.listenAndAnswerViewModel.onNextExerciseResult = {
+                DispatchQueue.main.async {
+                    if type {
+                        let newController = ListenAndAnswerViewController()
+                        self.navigationController?.pushViewController(newController, animated: true)
+                    }else {
+                        print("new view conroller")
+                        let newController = ListenAndRepeatViewController()
+                        self.navigationController?.pushViewController(newController, animated: true)
+                    }
+                }
+            }
+        }else{
+            print(answer, " vs ", answered)
+            self.alert(title: "Resposta incorreta...", message: "Ops... Tente novamente!", next: false)
+        }
+        
+        return true
+    }
+    
+}
+
 //MARK: - AVFoundation
 
-extension ListenAndRepeatViewController {
+extension ListenAndAnswerViewController {
     
     @objc func speakerClicked(){
         NotificationCenter.default.addObserver(self, selector: #selector(audioDidEnded), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
@@ -162,54 +200,5 @@ extension ListenAndRepeatViewController {
                 speakerButton.image = K.playingSoundIcon
             }
         }
-    }
-}
-
-//MARK: - Instant Search VoiceOverlay
-
-extension ListenAndRepeatViewController {
-    
-    func voiceOverlaySettings(){
-        voiceOverlayController.settings.layout.inputScreen.subtitleInitial = ""
-        voiceOverlayController.settings.layout.inputScreen.subtitleBullet = ""
-        voiceOverlayController.settings.layout.inputScreen.subtitleBulletList = []
-        guard let correctAnswer = exerciseModel.answer else {
-            return
-        }
-        voiceOverlayController.settings.layout.inputScreen.titleInProgress = correctAnswer
-        voiceOverlayController.settings.layout.inputScreen.titleListening = correctAnswer
-    }
-    
-    @objc func micClicked(){
-        voiceOverlayController.start(on: self, textHandler: { (text, finished ,any) in
-            if finished {
-                if text.lowercased() == self.exerciseModel.answer?.lowercased() {
-                    guard let type = self.exerciseModel.nextExercise?.type else {
-                        return
-                    }
-                    self.listenAndRepeatViewModel.goToNextExercise()
-                    self.listenAndRepeatViewModel.onNextExerciseResult = {
-                        DispatchQueue.main.async {
-                            if type {
-                                let newController = ListenAndAnswerViewController()
-                                self.navigationController?.pushViewController(newController, animated: true)
-                            }else {
-                                print("new view conroller")
-                                let newController = ListenAndRepeatViewController()
-                                self.navigationController?.pushViewController(newController, animated: true)
-                            }
-                        }
-                    }
-                    
-                }else{
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        self.alert(title: "Resposta incorreta...", message: "Ops... Tente novamente!", next: false)
-                    }
-                    print(self.exerciseModel.answer, " vs ", text)
-                }
-            }
-        }, errorHandler: { (error) in
-            print("voice output: error \(String(describing: error))")
-        })
     }
 }

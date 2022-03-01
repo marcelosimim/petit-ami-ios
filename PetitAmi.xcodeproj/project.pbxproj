@@ -15,6 +15,8 @@
 		A30F21C627CC42AC0088027E /* ListenAndRepeatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30F21C527CC42AC0088027E /* ListenAndRepeatViewModel.swift */; };
 		A30F21C927CC441A0088027E /* ExerciseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30F21C827CC441A0088027E /* ExerciseModel.swift */; };
 		A32C398F27CD90EE00CABCB0 /* UnitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32C398E27CD90EE00CABCB0 /* UnitModel.swift */; };
+		A365564E27CDB40E00F5E65F /* ListenAndAnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A365564D27CDB40E00F5E65F /* ListenAndAnswerViewController.swift */; };
+		A365565027CDBC2F00F5E65F /* ListenAndAnswerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A365564F27CDBC2F00F5E65F /* ListenAndAnswerViewModel.swift */; };
 		A395126427CB0D9B007BA391 /* ListenAndRepeatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A395126327CB0D9B007BA391 /* ListenAndRepeatViewController.swift */; };
 		A39C177727C9C3B800CB64AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C177627C9C3B800CB64AD /* AppDelegate.swift */; };
 		A39C177927C9C3B800CB64AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C177827C9C3B800CB64AD /* SceneDelegate.swift */; };
@@ -66,6 +68,8 @@
 		A30F21C527CC42AC0088027E /* ListenAndRepeatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenAndRepeatViewModel.swift; sourceTree = "<group>"; };
 		A30F21C827CC441A0088027E /* ExerciseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseModel.swift; sourceTree = "<group>"; };
 		A32C398E27CD90EE00CABCB0 /* UnitModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitModel.swift; sourceTree = "<group>"; };
+		A365564D27CDB40E00F5E65F /* ListenAndAnswerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenAndAnswerViewController.swift; sourceTree = "<group>"; };
+		A365564F27CDBC2F00F5E65F /* ListenAndAnswerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenAndAnswerViewModel.swift; sourceTree = "<group>"; };
 		A395126327CB0D9B007BA391 /* ListenAndRepeatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenAndRepeatViewController.swift; sourceTree = "<group>"; };
 		A39C177327C9C3B800CB64AD /* PetitAmi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetitAmi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A39C177627C9C3B800CB64AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -137,6 +141,7 @@
 		A30F21C727CC43FF0088027E /* Exercises */ = {
 			isa = PBXGroup;
 			children = (
+				A365564C27CDB3ED00F5E65F /* ListenAndAnswer */,
 				A395126227CB0D69007BA391 /* ListenAndRepeat */,
 			);
 			path = Exercises;
@@ -149,6 +154,15 @@
 				A30F21C827CC441A0088027E /* ExerciseModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		A365564C27CDB3ED00F5E65F /* ListenAndAnswer */ = {
+			isa = PBXGroup;
+			children = (
+				A365564D27CDB40E00F5E65F /* ListenAndAnswerViewController.swift */,
+				A365564F27CDBC2F00F5E65F /* ListenAndAnswerViewModel.swift */,
+			);
+			path = ListenAndAnswer;
 			sourceTree = "<group>";
 		};
 		A395126227CB0D69007BA391 /* ListenAndRepeat */ = {
@@ -585,6 +599,8 @@
 				A395126427CB0D9B007BA391 /* ListenAndRepeatViewController.swift in Sources */,
 				A30F21C227CBD51E0088027E /* HomeViewModel.swift in Sources */,
 				A3D495B327CAD82800DFF5A8 /* Repository.swift in Sources */,
+				A365565027CDBC2F00F5E65F /* ListenAndAnswerViewModel.swift in Sources */,
+				A365564E27CDB40E00F5E65F /* ListenAndAnswerViewController.swift in Sources */,
 				A39C17AC27C9C5A300CB64AD /* Constants.swift in Sources */,
 				A30F21C027CBD4B10088027E /* HomeViewController.swift in Sources */,
 				A30F21C627CC42AC0088027E /* ListenAndRepeatViewModel.swift in Sources */,
