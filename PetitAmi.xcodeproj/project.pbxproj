@@ -20,6 +20,9 @@
 		A365565227CE812B00F5E65F /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A365565127CE812B00F5E65F /* RegisterViewModel.swift */; };
 		A365565427CE832100F5E65F /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A365565327CE832100F5E65F /* UserModel.swift */; };
 		A365565627CE85B000F5E65F /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A365565527CE85B000F5E65F /* AppContainer.swift */; };
+		A37A403927CEC13500CF495F /* Carousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37A403827CEC13500CF495F /* Carousel.swift */; };
+		A37A403B27CEC18C00CF495F /* CarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37A403A27CEC18C00CF495F /* CarouselCell.swift */; };
+		A37A403D27CEC1BE00CF495F /* CarouselSlide.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37A403C27CEC1BE00CF495F /* CarouselSlide.swift */; };
 		A395126427CB0D9B007BA391 /* ListenAndRepeatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A395126327CB0D9B007BA391 /* ListenAndRepeatViewController.swift */; };
 		A39C177727C9C3B800CB64AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C177627C9C3B800CB64AD /* AppDelegate.swift */; };
 		A39C177927C9C3B800CB64AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C177827C9C3B800CB64AD /* SceneDelegate.swift */; };
@@ -75,6 +78,9 @@
 		A365565127CE812B00F5E65F /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		A365565327CE832100F5E65F /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		A365565527CE85B000F5E65F /* AppContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
+		A37A403827CEC13500CF495F /* Carousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Carousel.swift; sourceTree = "<group>"; };
+		A37A403A27CEC18C00CF495F /* CarouselCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCell.swift; sourceTree = "<group>"; };
+		A37A403C27CEC1BE00CF495F /* CarouselSlide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselSlide.swift; sourceTree = "<group>"; };
 		A395126327CB0D9B007BA391 /* ListenAndRepeatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenAndRepeatViewController.swift; sourceTree = "<group>"; };
 		A39C177327C9C3B800CB64AD /* PetitAmi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetitAmi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A39C177627C9C3B800CB64AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -159,6 +165,16 @@
 				A365565327CE832100F5E65F /* UserModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		A361573B27CEBD9800141B4C /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				A37A403827CEC13500CF495F /* Carousel.swift */,
+				A37A403A27CEC18C00CF495F /* CarouselCell.swift */,
+				A37A403C27CEC1BE00CF495F /* CarouselSlide.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		A365564C27CDB3ED00F5E65F /* ListenAndAnswer */ = {
@@ -336,6 +352,7 @@
 		A3E3FF2C27CABDF00049883D /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				A361573B27CEBD9800141B4C /* Components */,
 				A30F21BF27CBD4B10088027E /* HomeViewController.swift */,
 				A30F21C127CBD51E0088027E /* HomeViewModel.swift */,
 			);
@@ -599,6 +616,7 @@
 				A3E3FF2927CA78730049883D /* RegisterViewController.swift in Sources */,
 				A3E3FF2627CA77AD0049883D /* LoginViewController.swift in Sources */,
 				A32C398F27CD90EE00CABCB0 /* UnitModel.swift in Sources */,
+				A37A403927CEC13500CF495F /* Carousel.swift in Sources */,
 				A3D495AF27CAD74100DFF5A8 /* Firebase.swift in Sources */,
 				A30F21C927CC441A0088027E /* ExerciseModel.swift in Sources */,
 				A30F21BC27CBBEDB0088027E /* LoginViewModel.swift in Sources */,
@@ -612,6 +630,8 @@
 				A30F21C027CBD4B10088027E /* HomeViewController.swift in Sources */,
 				A30F21C627CC42AC0088027E /* ListenAndRepeatViewModel.swift in Sources */,
 				A3D495AC27CAC95500DFF5A8 /* Protocols.swift in Sources */,
+				A37A403D27CEC1BE00CF495F /* CarouselSlide.swift in Sources */,
+				A37A403B27CEC18C00CF495F /* CarouselCell.swift in Sources */,
 				A365565627CE85B000F5E65F /* AppContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

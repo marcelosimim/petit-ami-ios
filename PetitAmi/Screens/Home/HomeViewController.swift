@@ -12,6 +12,7 @@ class HomeViewController: UIViewController {
     
     let homeViewModel = AppContainer.shared.resolve(HomeViewModel.self)!
     var currentExerciseType:Bool?
+    var userModel:UserModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,9 +21,9 @@ class HomeViewController: UIViewController {
         customizeNavigationBar()
         addComponents()
         addConstraints()
-        loadCover()
-        getUserProgress()
+        getUserInfo()
         getCurrentExercise()
+        fetchCarousel()
     }
     
     //MARK: - Components
@@ -44,7 +45,6 @@ class HomeViewController: UIViewController {
     
     lazy var welcomeLabel: UILabel = {
        let label = UILabel()
-        label.text = "Bienvenue, user!"
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = UIColor.white
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -53,7 +53,6 @@ class HomeViewController: UIViewController {
     
     lazy var userInfoLabel: UILabel = {
        let label = UILabel()
-        label.text = "Unidade atual: 1\nExercício atual: 1\nNível do francês: Básico"
         label.numberOfLines = 3
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = UIColor.white
@@ -94,7 +93,7 @@ class HomeViewController: UIViewController {
          label.text = "Continue estudando"
          label.numberOfLines = 0
          label.textColor = UIColor.white
-         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
          label.translatesAutoresizingMaskIntoConstraints = false
          return label
     }()
@@ -123,12 +122,22 @@ class HomeViewController: UIViewController {
         return view
     }()
     
+    let unitLabel: UILabel = {
+        let label = UILabel()
+         label.text = "Unidades"
+         label.textColor = UIColor.white
+         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+         label.translatesAutoresizingMaskIntoConstraints = false
+         return label
+    }()
+    
     //MARK: - Navigation Bar
     
     func customizeNavigationBar(){
         self.navigationItem.setHidesBackButton(true, animated: false)
         let signOut = UIBarButtonItem(image: UIImage(systemName: "rectangle.portrait.and.arrow.right"), style: .plain, target: self, action: #selector(signOutTapped))
         navigationItem.rightBarButtonItems = [signOut]
+        navigationItem.leftBarButtonItems = []
     }
     
     //MARK: - Actions
@@ -174,15 +183,12 @@ extension HomeViewController: ViewConfiguration {
         view.addSubview(progressTitle)
         view.addSubview(progressBar)
         view.addSubview(coverImage)
+        view.addSubview(activityIndicator)
         view.addSubview(keepStudyingLabel)
-        
         view.addSubview(unitArea)
-        
-        
-        
-//        view.addSubview(activityIndicator)
-//        coverImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(coverClicked)))
-//        coverImage.isUserInteractionEnabled = true
+        view.addSubview(unitLabel)
+        coverImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(coverClicked)))
+        coverImage.isUserInteractionEnabled = true
     }
     
     func addConstraints() {
@@ -216,21 +222,19 @@ extension HomeViewController: ViewConfiguration {
             coverImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 130*K.viewWidthProportion),
             coverImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             coverImage.heightAnchor.constraint(equalToConstant: 150*K.viewHeightProportion),
+            activityIndicator.topAnchor.constraint(equalTo: progressBar.bottomAnchor, constant: 90*K.viewHeightProportion),
+            activityIndicator.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 130*K.viewWidthProportion),
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             keepStudyingLabel.topAnchor.constraint(equalTo: coverImage.bottomAnchor, constant: 10*K.viewHeightProportion),
             keepStudyingLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
+    
             unitArea.topAnchor.constraint(equalTo: keepStudingArea.bottomAnchor, constant: K.viewHeightProportion*32),
             unitArea.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: K.viewWidthProportion*horizontalDistance),
             unitArea.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 50),
             unitArea.heightAnchor.constraint(equalToConstant: K.viewHeightProportion*230),
-                        
-            
-            
-            
-            
-//            activityIndicator.topAnchor.constraint(equalTo: keepStudyingLabel.bottomAnchor, constant: 100*K.viewHeightProportion),
-//            activityIndicator.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 126*K.viewWidthProportion),
-//            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            unitLabel.topAnchor.constraint(equalTo: unitArea.topAnchor, constant: K.viewHeightProportion*16),
+            unitLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 46*K.viewWidthProportion),
+            unitLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
     }
 }
@@ -238,23 +242,25 @@ extension HomeViewController: ViewConfiguration {
 //MARK: - View Model
 
 extension HomeViewController {
-    func getUserProgress(){
-        homeViewModel.getUserProgress()
-        homeViewModel.userProgressCompletion = { data, error in
+    func getUserInfo(){
+        homeViewModel.getUserInfo()
+        homeViewModel.userInfoCompletion = {
             DispatchQueue.main.async {
-                guard let data = data else {
-                    print(error)
-                    return
-                }
-                self.progressBar.progress = data
+                self.userModel = self.homeViewModel.userModel
+                self.welcomeLabel.text = "Bienvenue, \(self.userModel?.name ?? "user")!"
+                self.userInfoLabel.text = "Unidade atual: \(self.userModel?.unit ?? 0)\nExercício atual: \(self.userModel?.exercise ?? 0)\nNível do francês: \(self.homeViewModel.frenchLevel())"
+                self.progressBar.progress = Float((self.userModel?.unit)!)/96.0
+                self.loadCover()
             }
         }
     }
     
     func loadCover() {
         activityIndicator.startAnimating()
-        
-        homeViewModel.loadCover()
+        guard let unit = userModel?.unit else {
+            return 
+        }
+        homeViewModel.loadCover(unit: unit)
         homeViewModel.loadCoverCompletion = { data, error in
             DispatchQueue.main.async {
                 guard let data = data else {
@@ -275,5 +281,9 @@ extension HomeViewController {
                 self.currentExerciseType = self.homeViewModel.exerciseModel?.type
             }
         }
+    }
+    
+    func fetchCarousel() {
+        homeViewModel.fetchCarousel(currentUnit: 2)
     }
 }

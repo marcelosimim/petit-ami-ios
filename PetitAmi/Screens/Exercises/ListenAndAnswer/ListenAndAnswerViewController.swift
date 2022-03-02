@@ -135,9 +135,9 @@ extension ListenAndAnswerViewController: ViewConfiguration {
     
     func customizeNavigationBar(){
         self.navigationItem.setHidesBackButton(true, animated: false)
-        let signOut = UIBarButtonItem(image: UIImage(systemName: "rectangle.portrait.and.arrow.right"), style: .plain, target: self, action: #selector(goBackToHome))
+        let signOut = UIBarButtonItem(image: UIImage(systemName: "arrowshape.turn.up.backward.fill"), style: .plain, target: self, action: #selector(goBackToHome))
         navigationItem.rightBarButtonItems = []
-        navigationItem.rightBarButtonItems = [signOut]
+        navigationItem.leftBarButtonItems = [signOut]
     }
     
     @objc func goBackToHome() {
