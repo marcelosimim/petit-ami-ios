@@ -20,6 +20,7 @@ protocol FirebaseProtocol {
     func getUnitInfo(unit u:Int, completion: @escaping (Int?, Error?) -> Void)
     func setExercise(number:Int, completion: @escaping (Error?) -> Void)
     func addNewUser(user:UserModel, completion: @escaping (Error?) -> Void)
+    func getImageCarousel(finalUnit:Int ,completion: @escaping ([UIImage]? ,Error?) -> Void)
 }
 
 class Firebase: FirebaseProtocol{
@@ -115,6 +116,20 @@ class Firebase: FirebaseProtocol{
             completion(error)
         }
     }
+    
+    func getImageCarousel(finalUnit:Int, completion: @escaping ([UIImage]? ,Error?) -> Void) {
+        var images:[UIImage] = []
+        for unit in 1...finalUnit {
+            print("image ", unit)
+            getCoverImage(for: unit) { image, error in
+                guard let image = image else {
+                    return
+                }
+                images.append(image)
+            }
+        }
+    }
+    
     
     //MARK: - User Section
     

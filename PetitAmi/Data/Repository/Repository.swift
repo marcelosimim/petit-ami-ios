@@ -18,6 +18,7 @@ protocol RepositoryProtocol {
     func getUnitInfo(unit u:Int, completion: @escaping (Int?, Error?) -> Void)
     func setExercise(number:Int, completion: @escaping (Error?) -> Void)
     func addNewUser(user:UserModel, completion: @escaping (Error?) -> Void)
+    func getImageCarousel(finalUnit:Int ,completion: @escaping ([UIImage]? ,Error?) -> Void)
 }
 
 class Repository: RepositoryProtocol {
@@ -65,5 +66,9 @@ class Repository: RepositoryProtocol {
     
     func addNewUser(user: UserModel, completion: @escaping (Error?) -> Void) {
         firebase.addNewUser(user: user, completion: completion)
+    }
+    
+    func getImageCarousel(finalUnit:Int ,completion: @escaping ([UIImage]? ,Error?) -> Void){
+        firebase.getImageCarousel(finalUnit: finalUnit, completion: completion)
     }
 }

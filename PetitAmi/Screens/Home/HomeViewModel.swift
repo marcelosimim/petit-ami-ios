@@ -17,7 +17,9 @@ class HomeViewModel {
     var loadCoverCompletion: ((UIImage?, Error?) -> ()) = { data, error in }
     var exerciseModel: ExerciseModel?
     var userModel: UserModel?
+    var carouselImages:[UIImage]?
     var onResults: (() -> ()) = { }
+    var onFetchCarousel: (() -> ()) = { }
     
     func signOutButtonTapped() {
         do{
@@ -78,11 +80,16 @@ class HomeViewModel {
         }
     }
     
-    func fetchCarousel(currentUnit:Int){
+    func fetchCarousel(unit:Int){
         var images:[UIImage] = []
         
-        for i in 1...currentUnit {
-            print(i)
+        repository.getImageCarousel(finalUnit: unit) { images, error in
+            guard let images = images else {
+                return
+            }
+
+            self.carouselImages = images
+            self.onFetchCarousel()
         }
     }
     

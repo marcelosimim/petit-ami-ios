@@ -23,7 +23,6 @@ class HomeViewController: UIViewController {
         addConstraints()
         getUserInfo()
         getCurrentExercise()
-        fetchCarousel()
     }
     
     //MARK: - Components
@@ -229,8 +228,8 @@ extension HomeViewController: ViewConfiguration {
             keepStudyingLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
     
             unitArea.topAnchor.constraint(equalTo: keepStudingArea.bottomAnchor, constant: K.viewHeightProportion*32),
-            unitArea.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: K.viewWidthProportion*horizontalDistance),
-            unitArea.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 50),
+            unitArea.leadingAnchor.constraint(equalTo: keepStudingArea.leadingAnchor),
+            unitArea.trailingAnchor.constraint(equalTo: keepStudingArea.trailingAnchor),
             unitArea.heightAnchor.constraint(equalToConstant: K.viewHeightProportion*230),
             unitLabel.topAnchor.constraint(equalTo: unitArea.topAnchor, constant: K.viewHeightProportion*16),
             unitLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 46*K.viewWidthProportion),
@@ -251,6 +250,7 @@ extension HomeViewController {
                 self.userInfoLabel.text = "Unidade atual: \(self.userModel?.unit ?? 0)\nExercício atual: \(self.userModel?.exercise ?? 0)\nNível do francês: \(self.homeViewModel.frenchLevel())"
                 self.progressBar.progress = Float((self.userModel?.unit)!)/96.0
                 self.loadCover()
+                self.fetchCarousel()
             }
         }
     }
@@ -284,6 +284,9 @@ extension HomeViewController {
     }
     
     func fetchCarousel() {
-        homeViewModel.fetchCarousel(currentUnit: 2)
+        homeViewModel.fetchCarousel(unit: 1)
+        homeViewModel.onFetchCarousel = {
+            
+        }
     }
 }
