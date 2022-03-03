@@ -10,7 +10,7 @@ import Foundation
 
 protocol RepositoryProtocol {
     func getCoverImage(for unit:Int, completion: @escaping (UIImage?, Error?) -> Void)
-    func getUserProgress(completion: @escaping (Float?, Error?) -> Void)
+    func getUserInfo(completion: @escaping (UserModel?, Error?) -> Void)
     func getUnitAndExercise(completion: @escaping ([Int]?, Error?) -> Void)
     func getExerciseImage(unit u:Int, exercise e:Int, completion: @escaping (UIImage?, Error?) -> Void)
     func getExerciseSound(unit u:Int, exercise e:Int, completion: @escaping (String?, Error?) -> Void)
@@ -18,6 +18,7 @@ protocol RepositoryProtocol {
     func getUnitInfo(unit u:Int, completion: @escaping (Int?, Error?) -> Void)
     func setExercise(number:Int, completion: @escaping (Error?) -> Void)
     func addNewUser(user:UserModel, completion: @escaping (Error?) -> Void)
+    func getImageCarousel(finalUnit:Int ,completion: @escaping ([UIImage]? ,Error?) -> Void)
 }
 
 class Repository: RepositoryProtocol {
@@ -59,11 +60,15 @@ class Repository: RepositoryProtocol {
     
     //MARK: - User Section
     
-    func getUserProgress(completion: @escaping (Float?, Error?) -> Void){
-        firebase.getUserProgress(completion: completion)
+    func getUserInfo(completion: @escaping (UserModel?, Error?) -> Void){
+        firebase.getUserInfo(completion: completion)
     }
     
     func addNewUser(user: UserModel, completion: @escaping (Error?) -> Void) {
         firebase.addNewUser(user: user, completion: completion)
+    }
+    
+    func getImageCarousel(finalUnit:Int ,completion: @escaping ([UIImage]? ,Error?) -> Void){
+        firebase.getImageCarousel(finalUnit: finalUnit, completion: completion)
     }
 }

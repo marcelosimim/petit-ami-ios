@@ -16,6 +16,7 @@ class K {
     
     //MARK: - Colors
     static let backgroundColor = UIColor(named: "Background")
+    static let areaColor = UIColor(named: "Area")
     static let primaryColor = UIColor(named: "Primary")
     static let buttonColor = UIColor(named: "Button")
     static let textFieldColor = UIColor(named: "TextField")
@@ -27,6 +28,8 @@ class K {
     static let homeImage = UIImage(named: "Reading")
     static let loginImage = UIImage(named: "Login")
     static let notFoundedImage = UIImage(systemName: "xmark.octagon")
+    static let  headerImage = UIImage(named: "Header")
+    static let perfilAreaImage = UIImage(named: "PerfilArea")
     
     //MARK: - Icons
     static let defaultSoundIcon = UIImage(systemName: "speaker.fill")

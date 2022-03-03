@@ -20,6 +20,7 @@
 		A365565227CE812B00F5E65F /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A365565127CE812B00F5E65F /* RegisterViewModel.swift */; };
 		A365565427CE832100F5E65F /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A365565327CE832100F5E65F /* UserModel.swift */; };
 		A365565627CE85B000F5E65F /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A365565527CE85B000F5E65F /* AppContainer.swift */; };
+		A38689EE27D151D0000FE6B1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38689ED27D151D0000FE6B1 /* HomeView.swift */; };
 		A395126427CB0D9B007BA391 /* ListenAndRepeatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A395126327CB0D9B007BA391 /* ListenAndRepeatViewController.swift */; };
 		A39C177727C9C3B800CB64AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C177627C9C3B800CB64AD /* AppDelegate.swift */; };
 		A39C177927C9C3B800CB64AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39C177827C9C3B800CB64AD /* SceneDelegate.swift */; };
@@ -75,6 +76,7 @@
 		A365565127CE812B00F5E65F /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		A365565327CE832100F5E65F /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		A365565527CE85B000F5E65F /* AppContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
+		A38689ED27D151D0000FE6B1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		A395126327CB0D9B007BA391 /* ListenAndRepeatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenAndRepeatViewController.swift; sourceTree = "<group>"; };
 		A39C177327C9C3B800CB64AD /* PetitAmi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetitAmi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A39C177627C9C3B800CB64AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -170,6 +172,14 @@
 			path = ListenAndAnswer;
 			sourceTree = "<group>";
 		};
+		A38689EC27D151A7000FE6B1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A38689ED27D151D0000FE6B1 /* HomeView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		A395126227CB0D69007BA391 /* ListenAndRepeat */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,10 +214,10 @@
 		A39C177527C9C3B800CB64AD /* PetitAmi */ = {
 			isa = PBXGroup;
 			children = (
+				A39C17AA27C9C58D00CB64AD /* Common */,
 				A32C398D27CD90DD00CABCB0 /* Model */,
 				A3D495B027CAD80C00DFF5A8 /* Data */,
 				A3D495B427CADFD600DFF5A8 /* Dependency Injection */,
-				A39C17AA27C9C58D00CB64AD /* Common */,
 				A39C17A727C9C40D00CB64AD /* Screens */,
 				A39C17A827C9C42500CB64AD /* View */,
 				A39C17A627C9C3FB00CB64AD /* Resources */,
@@ -336,6 +346,7 @@
 		A3E3FF2C27CABDF00049883D /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				A38689EC27D151A7000FE6B1 /* View */,
 				A30F21BF27CBD4B10088027E /* HomeViewController.swift */,
 				A30F21C127CBD51E0088027E /* HomeViewModel.swift */,
 			);
@@ -606,6 +617,7 @@
 				A365565227CE812B00F5E65F /* RegisterViewModel.swift in Sources */,
 				A30F21C227CBD51E0088027E /* HomeViewModel.swift in Sources */,
 				A3D495B327CAD82800DFF5A8 /* Repository.swift in Sources */,
+				A38689EE27D151D0000FE6B1 /* HomeView.swift in Sources */,
 				A365565027CDBC2F00F5E65F /* ListenAndAnswerViewModel.swift in Sources */,
 				A365564E27CDB40E00F5E65F /* ListenAndAnswerViewController.swift in Sources */,
 				A39C17AC27C9C5A300CB64AD /* Constants.swift in Sources */,

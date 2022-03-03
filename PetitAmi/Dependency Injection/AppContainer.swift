@@ -17,7 +17,7 @@ class AppContainer {
             Repository(firebase: r.resolve(FirebaseProtocol.self)!)
         }
         container.register(LoginViewModel.self) {_ in LoginViewModel()}
-        container.register(HomeViewModel.self) {_ in HomeViewModel()}
+        container.register(HomeViewModel.self) {_ in HomeViewModel()}.inObjectScope(.container)
         container.register(ListenAndRepeatViewModel.self) { r in ListenAndRepeatViewModel(repository: r.resolve(RepositoryProtocol.self)!)}
         container.register(ListenAndAnswerViewModel.self) { r in ListenAndAnswerViewModel(repository: r.resolve(RepositoryProtocol.self)!)}
         container.register(RegisterViewModel.self) { r in

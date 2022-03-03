@@ -10,65 +10,19 @@ import Swinject
 
 class HomeViewController: UIViewController {
     
+    var userModel:UserModel?
+    let homeView = HomeView()
     let homeViewModel = AppContainer.shared.resolve(HomeViewModel.self)!
     var currentExerciseType:Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = K.backgroundColor
-        
+        view = homeView
         customizeNavigationBar()
-        addComponents()
-        addConstraints()
-        loadCover()
-        getUserProgress()
+        getUserInfo()
         getCurrentExercise()
+        homeView.coverImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(coverClicked)))
     }
-    
-    //MARK: - Components
-    
-    let progressTitle: UILabel = {
-       let label = UILabel()
-        label.text = "Seu progresso:"
-        label.font = UIFont.systemFont(ofSize: K.viewHeightProportion*20, weight: .medium)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let progressBar: UIProgressView = {
-       let progressView = UIProgressView()
-        progressView.clipsToBounds = true
-        progressView.layer.cornerRadius = 5
-        progressView.progress = 0.0
-        progressView.trackTintColor = K.progressBarTrack
-        progressView.progressTintColor = K.progressBarProgress
-        progressView.translatesAutoresizingMaskIntoConstraints = false
-        return progressView
-    }()
-    
-    let keepStudyingLabel: UILabel = {
-        let label = UILabel()
-         label.text = "Continue estudando:"
-         label.font = UIFont.systemFont(ofSize: K.viewHeightProportion*20, weight: .medium)
-         label.translatesAutoresizingMaskIntoConstraints = false
-         return label
-    }()
-    
-    let coverImage: UIImageView = {
-       let imageView = UIImageView()
-        imageView.image = K.notFoundedImage
-        imageView.contentMode = .scaleAspectFit
-        imageView.isHidden = true
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    let activityIndicator: UIActivityIndicatorView  = {
-       let activityIndicatorView = UIActivityIndicatorView()
-        activityIndicatorView.hidesWhenStopped = true
-        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
-        return activityIndicatorView
-    }()
     
     //MARK: - Navigation Bar
     
@@ -76,6 +30,7 @@ class HomeViewController: UIViewController {
         self.navigationItem.setHidesBackButton(true, animated: false)
         let signOut = UIBarButtonItem(image: UIImage(systemName: "rectangle.portrait.and.arrow.right"), style: .plain, target: self, action: #selector(signOutTapped))
         navigationItem.rightBarButtonItems = [signOut]
+        navigationItem.leftBarButtonItems = []
     }
     
     //MARK: - Actions
@@ -84,14 +39,8 @@ class HomeViewController: UIViewController {
         guard let currentExerciseType = currentExerciseType else {
             return
         }
-
-        if currentExerciseType {
-            let newController = ListenAndAnswerViewController()
-            navigationController?.pushViewController(newController, animated: true)
-        }else {
-            let newController = ListenAndRepeatViewController()
-            navigationController?.pushViewController(newController, animated: true)
-        }
+        
+        currentExerciseType ? navigationController?.pushViewController(ListenAndAnswerViewController(), animated: true) : navigationController?.pushViewController(ListenAndRepeatViewController(), animated: true)
     }
     
     @objc func signOutTapped(){
@@ -99,8 +48,7 @@ class HomeViewController: UIViewController {
         homeViewModel.signOutCompletion = { error in
             DispatchQueue.main.async {
                 guard let error = error else {
-                    let newController = InitialViewController()
-                    self.navigationController?.pushViewController(newController, animated: true)
+                    self.navigationController?.pushViewController(InitialViewController(), animated: true)
                     return
                 }
                 print(error)
@@ -109,38 +57,42 @@ class HomeViewController: UIViewController {
     }
 }
 
-extension HomeViewController: ViewConfiguration {
-    
-    func getUserProgress(){
-        homeViewModel.getUserProgress()
-        homeViewModel.userProgressCompletion = { data, error in
+//MARK: - View Model
+
+extension HomeViewController {
+    func getUserInfo(){
+        homeViewModel.getUserInfo()
+        homeViewModel.userInfoCompletion = {
             DispatchQueue.main.async {
-                guard let data = data else {
-                    print(error)
-                    return
-                }
-                self.progressBar.progress = data
+                self.userModel = self.homeViewModel.userModel
+                self.homeView.welcomeLabel.text = "Bienvenue, \(self.userModel?.name ?? "user")!"
+                self.homeView.userInfoLabel.text = "Unidade atual: \(self.userModel?.unit ?? 0)\nExercício atual: \(self.userModel?.exercise ?? 0)\nNível do francês: \(self.homeViewModel.frenchLevel())"
+                self.homeView.progressBar.progress = Float((self.userModel?.unit)!)/96.0
+                self.loadCover()
+                self.fetchCarousel()
             }
         }
     }
-    
+
     func loadCover() {
-        activityIndicator.startAnimating()
-        
-        homeViewModel.loadCover()
+        homeView.activityIndicator.startAnimating()
+        guard let unit = userModel?.unit else {
+            return
+        }
+        homeViewModel.loadCover(unit: unit)
         homeViewModel.loadCoverCompletion = { data, error in
             DispatchQueue.main.async {
                 guard let data = data else {
                     print(error)
                     return
                 }
-                self.coverImage.image = data
-                self.coverImage.isHidden = false
-                self.activityIndicator.stopAnimating()
+                self.homeView.coverImage.image = data
+                self.homeView.coverImage.isHidden = false
+                self.homeView.activityIndicator.stopAnimating()
             }
         }
     }
-    
+
     func getCurrentExercise() {
         homeViewModel.getExercise()
         homeViewModel.onResults = {
@@ -149,37 +101,11 @@ extension HomeViewController: ViewConfiguration {
             }
         }
     }
-    
-    func addComponents() {
-        view.addSubview(progressTitle)
-        view.addSubview(progressBar)
-        view.addSubview(keepStudyingLabel)
-        view.addSubview(coverImage)
-        view.addSubview(activityIndicator)
-        coverImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(coverClicked)))
-        coverImage.isUserInteractionEnabled = true
-    }
-    
-    func addConstraints() {
-        let horizontalDistance: CGFloat = 46
-        NSLayoutConstraint.activate([
-            progressTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 70*K.viewHeightProportion),
-            progressTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalDistance*K.viewWidthProportion),
-            progressTitle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            progressBar.topAnchor.constraint(equalTo: progressTitle.bottomAnchor, constant: 24*K.viewHeightProportion),
-            progressBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalDistance*K.viewWidthProportion),
-            progressBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            progressBar.heightAnchor.constraint(equalToConstant: 15*K.viewHeightProportion),
-            keepStudyingLabel.topAnchor.constraint(equalTo: progressBar.bottomAnchor, constant: 48*K.viewHeightProportion),
-            keepStudyingLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalDistance*K.viewWidthProportion),
-            keepStudyingLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            coverImage.topAnchor.constraint(equalTo: keepStudyingLabel.bottomAnchor, constant: 24*K.viewHeightProportion),
-            coverImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 126*K.viewWidthProportion),
-            coverImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            coverImage.heightAnchor.constraint(equalToConstant: 200*K.viewHeightProportion),
-            activityIndicator.topAnchor.constraint(equalTo: keepStudyingLabel.bottomAnchor, constant: 100*K.viewHeightProportion),
-            activityIndicator.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 126*K.viewWidthProportion),
-            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        ])
+
+    func fetchCarousel() {
+        homeViewModel.fetchCarousel(unit: 1)
+        homeViewModel.onFetchCarousel = {
+
+        }
     }
 }

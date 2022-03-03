@@ -12,7 +12,7 @@ import FirebaseStorage
 
 protocol FirebaseProtocol {
     func getCoverImage(for unit:Int, completion: @escaping (UIImage?, Error?) -> Void)
-    func getUserProgress(completion: @escaping (Float?, Error?) -> Void)
+    func getUserInfo(completion: @escaping (UserModel?, Error?) -> Void)
     func getUnitAndExercise(completion: @escaping ([Int]?, Error?) -> Void)
     func getExerciseImage(unit u:Int, exercise e:Int, completion: @escaping (UIImage?, Error?) -> Void)
     func getExerciseSound(unit u:Int, exercise e:Int, completion: @escaping (String?, Error?) -> Void)
@@ -20,6 +20,7 @@ protocol FirebaseProtocol {
     func getUnitInfo(unit u:Int, completion: @escaping (Int?, Error?) -> Void)
     func setExercise(number:Int, completion: @escaping (Error?) -> Void)
     func addNewUser(user:UserModel, completion: @escaping (Error?) -> Void)
+    func getImageCarousel(finalUnit:Int ,completion: @escaping ([UIImage]? ,Error?) -> Void)
 }
 
 class Firebase: FirebaseProtocol{
@@ -116,20 +117,39 @@ class Firebase: FirebaseProtocol{
         }
     }
     
+    func getImageCarousel(finalUnit:Int, completion: @escaping ([UIImage]? ,Error?) -> Void) {
+        var images:[UIImage] = []
+        for unit in 1...finalUnit {
+            print("image ", unit)
+            getCoverImage(for: unit) { image, error in
+                guard let image = image else {
+                    return
+                }
+                images.append(image)
+            }
+        }
+    }
+    
+    
     //MARK: - User Section
     
     lazy var userRef = Firestore.firestore().collection("users").document(Auth.auth().currentUser?.uid ?? "")
     
-    func getUserProgress(completion: @escaping (Float?, Error?) -> Void) {
+    func getUserInfo(completion: @escaping (UserModel?, Error?) -> Void) {
+        var userModel = UserModel()
+        
         userRef.getDocument { document, error in
             guard let document = document else {
                 completion(nil, error)
                 return
             }
             
-            let unit = document.data()!["unit"] as! Float
-            let progress = unit/96.0
-            completion(progress, error)
+            userModel.name = document.data()!["name"] as! String
+            userModel.unit = document.data()!["unit"] as! Int
+            userModel.exercise = document.data()!["exercise"] as! Int
+            
+//            let progress = unit/96.0
+            completion(userModel, error)
         }
     }
     
