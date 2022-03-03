@@ -10,22 +10,15 @@ import FirebaseAuth
 
 class LoginViewModel {
     
-    var loginSuccedd : (() -> ()) = {}
-    var loginWithError : ((Error?) -> ()) = { error in }
+    var onResultLogin : ((Error?) -> ()) = { error in }
     
     func login(with email:String, and password: String){
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
             guard let result = result else {
-                self.loginWithError(error)
+                self.onResultLogin(error)
                 return
             }
-            
-            self.loginSuccedd()
+            self.onResultLogin(error)
         }
     }
-    
-    func signOut(){
-        
-    }
-    
 }
