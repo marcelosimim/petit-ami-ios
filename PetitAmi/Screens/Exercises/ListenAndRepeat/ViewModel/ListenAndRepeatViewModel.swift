@@ -13,6 +13,7 @@ class ListenAndRepeatViewModel {
     var exerciseModel: ExerciseModel?
     
     var onDataResults: ((ExerciseModel?) -> ()) = { data in }
+    var onCheckAnswerResult: ((Bool) -> ()) = { correct in }
     var onNextExerciseResult: (() -> ()) = { }
     
     init(repository: RepositoryProtocol){
@@ -105,6 +106,14 @@ class ListenAndRepeatViewModel {
             }
             
             self.exerciseModel?.nextExercise?.type = type
+        }
+    }
+    
+    func checkAnswer(answer:String){
+        if answer == exerciseModel?.answer?.lowercased() {
+            onCheckAnswerResult(true)
+        }else{
+            onCheckAnswerResult(false)
         }
     }
     
