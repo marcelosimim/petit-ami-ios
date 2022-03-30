@@ -28,7 +28,7 @@ class K {
     static let homeImage = UIImage(named: "Reading")
     static let loginImage = UIImage(named: "Login")
     static let notFoundedImage = UIImage(systemName: "xmark.octagon")
-    static let  headerImage = UIImage(named: "Header")
+    static let headerImage = UIImage(named: "Header")
     static let perfilAreaImage = UIImage(named: "PerfilArea")
     
     //MARK: - Icons
